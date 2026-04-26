@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CJ Yan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+    :root{
+      --bg:#F7F5F1;
+      --ink:#1A1816;
+      --soft:#9A948D;
+      --accent:#E8A020;
+      --px:'Press Start 2P',monospace;
+    }
+
+    html{scroll-snap-type:y mandatory;scroll-behavior:smooth;overflow-y:scroll;}
+    body{background:var(--bg);color:var(--ink);font-family:var(--px);overflow-x:hidden;}
+
+    #cv{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+    #grain{
+      position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.032;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px 180px;
+    }
+
+    section{
+      position:relative;z-index:2;
+      min-height:100vh;width:100%;
+      scroll-snap-align:start;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:3rem 1.5rem;
+      overflow:hidden;
+    }
+
+    /* ── blink dots ── */
+    .dot-row{display:flex;gap:8px;align-items:center;margin-bottom:2.5rem;}
+    .dot{width:7px;height:7px;background:var(--accent);animation:dotBlink 1.2s step-end infinite;}
+    .dot:nth-child(2){animation-delay:.3s;}
+    .dot:nth-child(3){animation-delay:.6s;}
+
+    /* ── S1 ── */
+    #s1{text-align:center;}
+
+    .s1-label{
+      font-size:0.42rem;letter-spacing:.22em;
+      color:var(--soft);margin-bottom:2.8rem;
+      opacity:0;animation:fadeUp .8s ease .1s forwards;
+    }
+
+    .s1-name{
+      font-size:clamp(.9rem,2.8vw,2rem);
+      line-height:1.9;color:var(--ink);
+      opacity:0;animation:fadeUp .8s ease .5s forwards;
+    }
+    .hi{color:var(--soft);}
+    .wink{color:var(--accent);}
+
+    /* pac-man */
+    .pacman-row{
+      width:100%;max-width:460px;height:28px;
+      margin-top:3.5rem;position:relative;
+      opacity:0;animation:fadeUp .8s ease 1s forwards;
+    }
+    .pac-dots{
+      position:absolute;top:50%;left:0;right:36px;
+      transform:translateY(-50%);
+      display:flex;align-items:center;
+    }
+    .pac-dot{
+      width:5px;height:5px;
+      background:var(--soft);
+      margin-right:16px;flex-shrink:0;
+      transition:opacity .05s;
+    }
+    .pac{
+      position:absolute;top:50%;
+      transform:translateY(-50%);
+      width:20px;height:20px;
+      animation:pacRun 3.8s linear infinite;
+    }
+
+    /* hint */
+    .hint{
+      margin-top:2.8rem;
+      display:flex;flex-direction:column;align-items:center;gap:.6rem;
+      cursor:pointer;
+      opacity:0;animation:fadeUp .8s ease 1.5s forwards;
+    }
+    .hint-txt{font-size:.36rem;letter-spacing:.2em;color:var(--soft);}
+    .hint-line{width:1px;height:32px;background:var(--soft);opacity:.4;animation:pulse 2.2s ease-in-out 2.2s infinite;}
+
+    /* ── S2 ── */
+    #s2{text-align:center;}
+
+    .kao{
+      font-size:clamp(.8rem,2.2vw,1.3rem);
+      color:var(--accent);letter-spacing:.08em;
+      margin-bottom:3rem;
+      opacity:0;transform:translateY(20px);
+      transition:opacity .8s ease,transform .8s ease;
+    }
+    .trap-a{
+      font-size:clamp(.75rem,2vw,1.2rem);
+      line-height:2;color:var(--ink);
+      margin-bottom:.5rem;
+      opacity:0;transform:translateY(20px);
+      transition:opacity .8s ease .15s,transform .8s ease .15s;
+    }
+    .trap-b{
+      font-size:clamp(.75rem,2vw,1.2rem);
+      line-height:2;color:var(--soft);
+      opacity:0;transform:translateY(20px);
+      transition:opacity .8s ease .3s,transform .8s ease .3s;
+    }
+    .mid-hint{
+      margin:4.5rem 0;
+      display:flex;flex-direction:column;align-items:center;gap:.6rem;
+      opacity:0;transform:translateY(12px);
+      transition:opacity .8s ease .45s,transform .8s ease .45s;
+    }
+    .mid-txt{font-size:.33rem;letter-spacing:.22em;color:var(--soft);}
+    .mid-line{width:1px;height:28px;background:var(--soft);opacity:.3;}
+
+    /* ── S3 ── */
+    #s3{text-align:center;}
+
+    .r-just{
+      font-size:clamp(.75rem,2vw,1.2rem);
+      line-height:2;color:var(--ink);
+      opacity:0;transform:translateY(20px);
+      transition:opacity .8s ease,transform .8s ease;
+    }
+    .r-sub{
+      font-size:.48rem;
+      line-height:2.4;letter-spacing:.04em;
+      color:var(--soft);margin-top:2.2rem;
+      text-align:center;
+      opacity:0;transform:translateY(20px);
+      transition:opacity .8s ease .2s,transform .8s ease .2s;
+    }
+    .pixel-border{
+      display:flex;gap:5px;margin-top:3rem;
+      opacity:0;transform:translateY(12px);
+      transition:opacity .8s ease .4s,transform .8s ease .4s;
+    }
+    .pb{width:8px;height:8px;background:var(--accent);}
+    .pb:nth-child(even){background:var(--soft);}
+
+    .vis{opacity:1!important;transform:translateY(0)!important;}
+
+    footer{
+      position:relative;z-index:2;
+      text-align:center;padding:2.5rem 1rem;
+      font-size:.32rem;letter-spacing:.18em;
+      color:var(--soft);opacity:.4;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(16px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    @keyframes pulse{
+      0%,100%{opacity:.25;transform:scaleY(.9);}
+      50%{opacity:.6;transform:scaleY(1.1);}
+    }
+    @keyframes dotBlink{
+      0%,100%{opacity:1;}50%{opacity:.15;}
+    }
+    @keyframes pacRun{
+      0%{left:-28px;}
+      100%{left:calc(100% + 8px);}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+<div id="grain"></div>
+
+<!-- S1 -->
+<section id="s1">
+  <div class="dot-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <p class="s1-label">CJYAN.ME</p>
+  <h1 class="s1-name">
+    <span class="hi">HI, I'M </span>CJ YAN <span class="wink">;)</span>
+  </h1>
+  <div class="pacman-row" id="pacrow">
+    <div class="pac-dots" id="pacdots"></div>
+    <canvas id="pac" class="pac" width="20" height="20"></canvas>
+  </div>
+  <div class="hint" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">
+    <span class="hint-txt">SCROLL</span>
+    <div class="hint-line"></div>
+  </div>
+</section>
+
+<!-- S2 -->
+<section id="s2">
+  <div class="kao"   id="k0">(¬‿¬)</div>
+  <p class="trap-a"  id="k1">THIS IS A TRAP.</p>
+  <p class="trap-b"  id="k2">YOU FELL FOR IT.</p>
+  <div class="mid-hint" id="k3">
+    <span class="mid-txt">KEEP GOING</span>
+    <div class="mid-line"></div>
+  </div>
+</section>
+
+<!-- S3 -->
+<section id="s3">
+  <div class="dot-row" id="k4" style="margin-bottom:2.5rem;">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+  <p class="r-just" id="k5">JUST KIDDING.</p>
+  <p class="r-sub"  id="k6">I'M STILL BUILDING THIS SITE.<br/>MORE COMING SOON.</p>
+  <div class="pixel-border" id="k7">
+    <div class="pb"></div><div class="pb"></div><div class="pb"></div>
+    <div class="pb"></div><div class="pb"></div><div class="pb"></div>
+    <div class="pb"></div><div class="pb"></div>
+  </div>
+</section>
+
+<footer>© CJ YAN &nbsp;·&nbsp; LOS ANGELES</footer>
+
+<script>
+/* ── wave canvas ── */
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+let W,H,t=0;
+function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+rsz();addEventListener('resize',rsz);
+const layers=[
+  {a:30,f:.0017,s:.38,y:.28,op:.09,c:[190,182,170]},
+  {a:20,f:.0023,s:.57,y:.47,op:.075,c:[200,193,182]},
+  {a:36,f:.0013,s:.27,y:.63,op:.065,c:[182,175,163]},
+  {a:14,f:.0031,s:.70,y:.80,op:.055,c:[210,204,196]},
+];
+function drawWave(){
+  cx.clearRect(0,0,W,H);
+  layers.forEach(({a,f,s,y,op,c})=>{
+    const cy=H*y,[r,g,b]=c;
+    cx.beginPath();cx.moveTo(0,H);
+    for(let x=0;x<=W;x+=3){
+      const wy=cy+Math.sin(x*f+t*s)*a+Math.sin(x*f*1.65+t*s*.6+1.3)*a*.4;
+      cx.lineTo(x,wy);
+    }
+    cx.lineTo(W,H);cx.closePath();
+    const g2=cx.createLinearGradient(0,cy-a*2.5,0,cy+a*2.5);
+    g2.addColorStop(0,`rgba(${r},${g},${b},0)`);
+    g2.addColorStop(.5,`rgba(${r},${g},${b},${op})`);
+    g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    cx.fillStyle=g2;cx.fill();
+  });
+  t+=.012;requestAnimationFrame(drawWave);
+}
+drawWave();
+
+/* ── pac-man dots ── */
+const dotsEl=document.getElementById('pacdots');
+const pacRowEl=document.getElementById('pacrow');
+function buildDots(){
+  dotsEl.innerHTML='';
+  const n=Math.floor((pacRowEl.offsetWidth-40)/21);
+  for(let i=0;i<n;i++){
+    const d=document.createElement('div');
+    d.className='pac-dot';d.id='pd'+i;
+    dotsEl.appendChild(d);
+  }
+}
+buildDots();addEventListener('resize',buildDots);
+
+/* ── pac-man draw ── */
+const pacC=document.getElementById('pac'),pcx=pacC.getContext('2d');
+let mouth=true;
+setInterval(()=>{
+  mouth=!mouth;
+  pcx.clearRect(0,0,20,20);
+  pcx.fillStyle='#E8A020';
+  pcx.beginPath();
+  const m=mouth?.28:.04;
+  pcx.arc(10,10,9,m*Math.PI,(2-m)*Math.PI);
+  pcx.lineTo(10,10);pcx.closePath();pcx.fill();
+  pcx.fillStyle='#1A1816';
+  pcx.fillRect(12,4,3,3);
+},180);
+
+/* ── eat dots ── */
+function eatDots(){
+  const pr=pacC.getBoundingClientRect(),rr=pacRowEl.getBoundingClientRect();
+  const px=pr.left-rr.left+pr.width/2;
+  document.querySelectorAll('.pac-dot').forEach(d=>{
+    const dr=d.getBoundingClientRect();
+    const dx=dr.left-rr.left+dr.width/2;
+    d.style.opacity=dx<px?'0':'1';
+  });
+  requestAnimationFrame(eatDots);
+}
+eatDots();
+
+/* ── scroll reveal ── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.15});
+['k0','k1','k2','k3','k4','k5','k6','k7'].forEach(id=>{
+  const el=document.getElementById(id);if(el)io.observe(el);
+});
+</script>
+</body>
+</html>
