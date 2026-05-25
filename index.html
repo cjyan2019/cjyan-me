@@ -1,314 +1,5246 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CJ Yan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CJ Yan - Pixel Portfolio Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-
-    :root{
-      --bg:#F7F5F1;
-      --ink:#1A1816;
-      --soft:#9A948D;
-      --accent:#E8A020;
-      --px:'Press Start 2P',monospace;
+    :root {
+      --bg: #060606;
+      --rail: #1f1f1f;
+      --ink: #f7f7f7;
+      --muted: #888;
+      --soft: #bdbdbd;
+      --red: #ff1d12;
+      --blue: #108cff;
+      --orange: #d86a2b;
+      --acid: #c7ff36;
+      --cyan: #00d7ff;
+      --line: rgba(255, 255, 255, 0.12);
+      --max: 920px;
     }
 
-    html{scroll-snap-type:y mandatory;scroll-behavior:smooth;overflow-y:scroll;}
-    body{background:var(--bg);color:var(--ink);font-family:var(--px);overflow-x:hidden;}
-
-    #cv{position:fixed;inset:0;z-index:0;pointer-events:none;}
-
-    #grain{
-      position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.032;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size:180px 180px;
+    * {
+      box-sizing: border-box;
     }
 
-    section{
-      position:relative;z-index:2;
-      min-height:100vh;width:100%;
-      scroll-snap-align:start;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      padding:3rem 1.5rem;
-      overflow:hidden;
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 112px;
+      background: var(--rail);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
 
-    /* ── blink dots ── */
-    .dot-row{display:flex;gap:8px;align-items:center;margin-bottom:2.5rem;}
-    .dot{width:7px;height:7px;background:var(--accent);animation:dotBlink 1.2s step-end infinite;}
-    .dot:nth-child(2){animation-delay:.3s;}
-    .dot:nth-child(3){animation-delay:.6s;}
-
-    /* ── S1 ── */
-    #s1{text-align:center;}
-
-    .s1-label{
-      font-size:0.42rem;letter-spacing:.22em;
-      color:var(--soft);margin-bottom:2.8rem;
-      opacity:0;animation:fadeUp .8s ease .1s forwards;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, #202020 0 calc((100vw - var(--max)) / 2), var(--bg) calc((100vw - var(--max)) / 2) calc(100% - ((100vw - var(--max)) / 2)), #202020 calc(100% - ((100vw - var(--max)) / 2))),
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        var(--rail);
+      background-size: auto, 18px 18px, 18px 18px, auto;
+      overflow-x: hidden;
     }
 
-    .s1-name{
-      font-size:clamp(.9rem,2.8vw,2rem);
-      line-height:1.9;color:var(--ink);
-      opacity:0;animation:fadeUp .8s ease .5s forwards;
-    }
-    .hi{color:var(--soft);}
-    .wink{color:var(--accent);}
-
-    /* pac-man */
-    .pacman-row{
-      width:100%;max-width:460px;height:28px;
-      margin-top:3.5rem;position:relative;
-      opacity:0;animation:fadeUp .8s ease 1s forwards;
-    }
-    .pac-dots{
-      position:absolute;top:50%;left:0;right:36px;
-      transform:translateY(-50%);
-      display:flex;align-items:center;
-    }
-    .pac-dot{
-      width:5px;height:5px;
-      background:var(--soft);
-      margin-right:16px;flex-shrink:0;
-      transition:opacity .05s;
-    }
-    .pac{
-      position:absolute;top:50%;
-      transform:translateY(-50%);
-      width:20px;height:20px;
-      animation:pacRun 3.8s linear infinite;
+    img {
+      display: block;
+      max-width: 100%;
     }
 
-    /* hint */
-    .hint{
-      margin-top:2.8rem;
-      display:flex;flex-direction:column;align-items:center;gap:.6rem;
-      cursor:pointer;
-      opacity:0;animation:fadeUp .8s ease 1.5s forwards;
-    }
-    .hint-txt{font-size:.36rem;letter-spacing:.2em;color:var(--soft);}
-    .hint-line{width:1px;height:32px;background:var(--soft);opacity:.4;animation:pulse 2.2s ease-in-out 2.2s infinite;}
-
-    /* ── S2 ── */
-    #s2{text-align:center;}
-
-    .kao{
-      font-size:clamp(.8rem,2.2vw,1.3rem);
-      color:var(--accent);letter-spacing:.08em;
-      margin-bottom:3rem;
-      opacity:0;transform:translateY(20px);
-      transition:opacity .8s ease,transform .8s ease;
-    }
-    .trap-a{
-      font-size:clamp(.75rem,2vw,1.2rem);
-      line-height:2;color:var(--ink);
-      margin-bottom:.5rem;
-      opacity:0;transform:translateY(20px);
-      transition:opacity .8s ease .15s,transform .8s ease .15s;
-    }
-    .trap-b{
-      font-size:clamp(.75rem,2vw,1.2rem);
-      line-height:2;color:var(--soft);
-      opacity:0;transform:translateY(20px);
-      transition:opacity .8s ease .3s,transform .8s ease .3s;
-    }
-    .mid-hint{
-      margin:4.5rem 0;
-      display:flex;flex-direction:column;align-items:center;gap:.6rem;
-      opacity:0;transform:translateY(12px);
-      transition:opacity .8s ease .45s,transform .8s ease .45s;
-    }
-    .mid-txt{font-size:.33rem;letter-spacing:.22em;color:var(--soft);}
-    .mid-line{width:1px;height:28px;background:var(--soft);opacity:.3;}
-
-    /* ── S3 ── */
-    #s3{text-align:center;}
-
-    .r-just{
-      font-size:clamp(.75rem,2vw,1.2rem);
-      line-height:2;color:var(--ink);
-      opacity:0;transform:translateY(20px);
-      transition:opacity .8s ease,transform .8s ease;
-    }
-    .r-sub{
-      font-size:.48rem;
-      line-height:2.4;letter-spacing:.04em;
-      color:var(--soft);margin-top:2.2rem;
-      text-align:center;
-      opacity:0;transform:translateY(20px);
-      transition:opacity .8s ease .2s,transform .8s ease .2s;
-    }
-    .pixel-border{
-      display:flex;gap:5px;margin-top:3rem;
-      opacity:0;transform:translateY(12px);
-      transition:opacity .8s ease .4s,transform .8s ease .4s;
-    }
-    .pb{width:8px;height:8px;background:var(--accent);}
-    .pb:nth-child(even){background:var(--soft);}
-
-    .vis{opacity:1!important;transform:translateY(0)!important;}
-
-    footer{
-      position:relative;z-index:2;
-      text-align:center;padding:2.5rem 1rem;
-      font-size:.32rem;letter-spacing:.18em;
-      color:var(--soft);opacity:.4;
+    a,
+    button {
+      color: inherit;
+      font: inherit;
     }
 
-    @keyframes fadeUp{
-      from{opacity:0;transform:translateY(16px);}
-      to{opacity:1;transform:translateY(0);}
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
     }
-    @keyframes pulse{
-      0%,100%{opacity:.25;transform:scaleY(.9);}
-      50%{opacity:.6;transform:scaleY(1.1);}
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.82);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
     }
-    @keyframes dotBlink{
-      0%,100%{opacity:1;}50%{opacity:.15;}
+
+    .nav {
+      width: min(var(--max), 100vw);
+      margin: 0 auto;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
     }
-    @keyframes pacRun{
-      0%{left:-28px;}
-      100%{left:calc(100% + 8px);}
+
+    .brand {
+      display: grid;
+      gap: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .navlinks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .navlinks a {
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      color: var(--soft);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+
+    .navlinks a:hover {
+      border-color: var(--acid);
+      color: var(--ink);
+      background: rgba(199, 255, 54, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .page {
+      width: min(var(--max), 100vw);
+      margin: 0 auto;
+      background: var(--bg);
+    }
+
+    .section {
+      padding: 72px 72px;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.055);
+    }
+
+    .section.tight {
+      padding-top: 42px;
+      padding-bottom: 42px;
+    }
+
+    .center {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .home {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      align-content: center;
+      gap: 34px;
+      padding-top: 54px;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.75fr);
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .home-copy {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+    }
+
+    .intro-title {
+      font-size: clamp(48px, 7.4vw, 86px);
+      line-height: 0.82;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .intro-title .accent {
+      color: var(--acid);
+    }
+
+    .system-line {
+      width: min(520px, 100%);
+      color: #a9a9a9;
+      font-size: clamp(17px, 2.3vw, 23px);
+      line-height: 1.05;
+      font-weight: 850;
+    }
+
+    .identity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .identity-tags span {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.04);
+      padding: 8px 10px;
+      color: #d8d8d8;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .portrait-panel {
+      margin: 0;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: #0a0a0a;
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait-panel::before {
+      content: "CJ/YAN";
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      z-index: 2;
+      color: var(--bg);
+      background: var(--acid);
+      padding: 5px 7px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .portrait-panel img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      object-position: 46% center;
+      filter: contrast(1.04) saturate(0.88);
+    }
+
+    .portrait-panel figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #818181;
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .category-card {
+      min-height: 132px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: inherit;
+      text-decoration: none;
+      padding: 14px;
+      display: grid;
+      align-content: space-between;
+      background:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        #080808;
+      background-size: 8px 8px, 8px 8px, auto;
+      transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--acid);
+      background-color: #0c0c0c;
+    }
+
+    .category-card small {
+      color: var(--acid);
+      font-size: 10px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .category-card strong {
+      display: block;
+      margin-top: 22px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 0.95;
+      font-weight: 950;
+    }
+
+    .category-card span {
+      color: #888;
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 750;
+    }
+
+    .case-head {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 22px;
+      align-items: end;
+      margin-bottom: 42px;
+      text-align: left;
+    }
+
+    .case-index {
+      color: var(--acid);
+      font-size: 42px;
+      line-height: 0.82;
+      font-weight: 950;
+    }
+
+    .case-head p {
+      color: #858585;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .case-head h2 {
+      color: var(--ink);
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 0.88;
+      font-weight: 950;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5.5vw, 64px);
+      line-height: 0.9;
+      font-weight: 950;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .section-title.red {
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .section-title.blue {
+      color: #2f7ff5;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .section-title.orange {
+      color: var(--orange);
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.5vw, 24px);
+      line-height: 1.15;
+      font-weight: 850;
+    }
+
+    .body-copy {
+      max-width: 660px;
+      color: var(--soft);
+      font-size: 18px;
+      line-height: 1.22;
+      font-weight: 850;
+    }
+
+    .muted-copy {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .hero-image {
+      width: min(560px, 100%);
+      max-height: 310px;
+      margin: 0 auto 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-name {
+      margin-top: 8px;
+      font-size: 26px;
+      font-weight: 950;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .hero-intro {
+      max-width: 720px;
+      margin: 18px auto 0;
+      color: #868686;
+      font-size: clamp(20px, 3vw, 28px);
+      line-height: 0.95;
+      font-weight: 950;
+    }
+
+    .role-block {
+      width: min(420px, 100%);
+      margin: 110px auto 88px;
+      text-align: left;
+    }
+
+    .role-block p {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.03;
+      font-weight: 950;
+    }
+
+    .role-block .note {
+      display: block;
+      margin-top: 16px;
+      color: #555;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+      align-items: end;
+      margin-top: 42px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 0.85;
+      font-weight: 950;
+    }
+
+    .stat strong.accent {
+      color: var(--red);
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: #686868;
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 0.85fr 1fr;
+      gap: 34px;
+      align-items: center;
+      margin-top: 56px;
+    }
+
+    .feature-row.reverse {
+      grid-template-columns: 1fr 0.85fr;
+    }
+
+    .feature-row.reverse .copy {
+      order: 2;
+    }
+
+    .copy h3,
+    .card h3 {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 0.94;
+      font-weight: 950;
+    }
+
+    .copy h4 {
+      margin-top: 3px;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .copy p {
+      margin-top: 12px;
+      color: #818181;
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 650;
+    }
+
+    .bullets {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: #838383;
+      font-size: 19px;
+      line-height: 1.05;
+      font-weight: 850;
+    }
+
+    .bullets li::marker {
+      color: var(--red);
+    }
+
+    .red-text {
+      color: var(--red);
+      font-weight: 950;
+    }
+
+    .image-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .phone-img {
+      max-height: 270px;
+      width: auto;
+      margin: 0 auto;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .proof-img {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      object-fit: contain;
+      background: #0b0b0b;
+    }
+
+    .outlined-proof {
+      border: 2px solid var(--blue);
+      padding: 18px;
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .creator-grid {
+      display: grid;
+      gap: 72px;
+      margin-top: 76px;
+    }
+
+    .creator-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .creator-card:nth-child(even) .creator-copy {
+      order: 2;
+    }
+
+    .creator-card img {
+      border-radius: 12px;
+      object-fit: contain;
+      width: 100%;
+      max-height: 340px;
+    }
+
+    .creator-copy h3 {
+      font-size: 26px;
+      line-height: 0.96;
+      font-weight: 950;
+    }
+
+    .creator-copy p {
+      margin-top: 9px;
+      color: #818181;
+      font-size: 14px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .metric-band {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin: 52px auto 0;
+    }
+
+    .metric-band.six {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 620px;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 36px;
+      line-height: 0.9;
+      font-weight: 950;
+    }
+
+    .metric strong.red {
+      color: var(--red);
+    }
+
+    .metric strong.orange {
+      color: #ff7a00;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: #6d6d6d;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .logo-proof {
+      width: min(640px, 92%);
+      margin: 60px auto 20px;
+      object-fit: contain;
+    }
+
+    .caption {
+      width: min(560px, 100%);
+      margin: 34px auto 0;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.1;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .caption.dim {
+      margin-top: 18px;
+      color: #7d7d7d;
+      font-weight: 850;
+    }
+
+    .full-proof {
+      margin-top: 58px;
+    }
+
+    .proof-title-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 12px;
+      color: #737373;
+      font-size: 13px;
+      font-weight: 850;
+      margin-bottom: 10px;
+    }
+
+    .event-zones {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .event-zones article {
+      display: grid;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .event-zones h4 {
+      font-size: 13px;
+      color: var(--soft);
+      line-height: 1.05;
+    }
+
+    .event-zones img {
+      aspect-ratio: 3 / 4;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 9px;
+    }
+
+    .platform-row {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 22px;
+      margin-top: 34px;
+      overflow: hidden;
+    }
+
+    .platform-row img {
+      max-height: 190px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .mark-frame {
+      border-left: 3px solid var(--blue);
+      border-right: 3px solid var(--blue);
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .mark-hero-img {
+      width: min(640px, 100%);
+      max-height: 390px;
+      object-fit: cover;
+      object-position: center 36%;
+      margin: 48px auto 58px;
+      border-radius: 9px;
+    }
+
+    .three-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 44px;
+    }
+
+    .small-proof-card {
+      text-align: center;
+    }
+
+    .small-proof-card img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #111;
+    }
+
+    .small-proof-card h3 {
+      margin-top: 14px;
+      font-size: 18px;
+      line-height: 1.05;
+    }
+
+    .small-proof-card p {
+      margin-top: 10px;
+      color: #7a7a7a;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .film-brand-preview {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 38px;
+    }
+
+    .preview-card {
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: #090909;
+    }
+
+    .preview-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      margin-bottom: 14px;
+    }
+
+    .preview-card h3 {
+      font-size: 18px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .preview-card p {
+      margin-top: 8px;
+      color: #858585;
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .review-note {
+      border: 1px dashed rgba(255,255,255,0.28);
+      padding: 18px;
+      margin: 32px auto 0;
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 750;
+    }
+
+    .locked-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .locked-card {
+      min-height: 250px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        #080808;
+      background-size: 10px 10px, 10px 10px, auto;
+      padding: 22px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .locked-card strong {
+      display: block;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 0.9;
+      font-weight: 950;
+    }
+
+    .locked-card p {
+      margin-top: 14px;
+      color: #8a8a8a;
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 750;
+    }
+
+    .status-pill {
+      width: fit-content;
+      border: 1px solid rgba(199,255,54,0.45);
+      color: var(--acid);
+      padding: 6px 8px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .layout-lab {
+      display: grid;
+      gap: 18px;
+      margin-top: 42px;
+    }
+
+    .layout-lane {
+      border-top: 1px solid rgba(255,255,255,0.16);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: 0.62fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .lane-copy h3 {
+      font-size: clamp(26px, 3.5vw, 42px);
+      line-height: 0.9;
+      font-weight: 950;
+    }
+
+    .lane-copy p {
+      margin-top: 12px;
+      color: #8a8a8a;
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 750;
+    }
+
+    .lane-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .lane-meta span {
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #bdbdbd;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .proof-strip img,
+    .proof-mosaic img {
+      width: 100%;
+      height: 100%;
+      min-height: 190px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #111;
+    }
+
+    .proof-strip.tall img {
+      aspect-ratio: 9 / 16;
+      min-height: 280px;
+      object-fit: cover;
+    }
+
+    .proof-mosaic {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr;
+      grid-template-rows: 160px 160px;
+      gap: 8px;
+    }
+
+    .proof-mosaic img:first-child {
+      grid-row: span 2;
+    }
+
+    .asset-rule {
+      margin-top: 34px;
+      border: 1px dashed rgba(255,255,255,0.25);
+      padding: 16px;
+      color: #949494;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
+    #pan,
+    #content,
+    #content + .section,
+    #events,
+    #events + .section,
+    #events + .section + .section,
+    #mark,
+    #other {
+      display: none;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        background: var(--bg);
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 18px;
+      }
+
+      .navlinks {
+        justify-content: flex-start;
+      }
+
+      .section {
+        padding: 54px 24px;
+      }
+
+      .stat-row,
+      .metric-band,
+      .metric-band.six,
+      .three-card-grid,
+      .film-brand-preview,
+      .event-zones,
+      .category-grid,
+      .locked-grid,
+      .proof-strip,
+      .proof-mosaic {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature-row,
+      .feature-row.reverse,
+      .creator-card,
+      .outlined-proof,
+      .home-grid,
+      .case-head,
+      .layout-lane {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-row.reverse .copy,
+      .creator-card:nth-child(even) .creator-copy {
+        order: 0;
+      }
+
+      .role-block {
+        margin-top: 70px;
+        margin-bottom: 64px;
+      }
+
+      .section-title {
+        font-size: 42px;
+      }
+
+      .home {
+        min-height: auto;
+      }
+
+      .portrait-panel img {
+        height: 320px;
+      }
+
+      .proof-mosaic {
+        grid-template-rows: auto;
+      }
+
+      .proof-mosaic img:first-child {
+        grid-row: auto;
+      }
+    }
+
+    /* v0.3 editorial dossier direction */
+    :root {
+      --bg: #f2f0ea;
+      --rail: #151515;
+      --ink: #121212;
+      --muted: #706d66;
+      --soft: #2a2925;
+      --red: #d9231f;
+      --blue: #1a4f8f;
+      --orange: #9b4a24;
+      --acid: #d9231f;
+      --cyan: #245b69;
+      --line: rgba(18, 18, 18, 0.16);
+      --max: 980px;
+    }
+
+    html {
+      background: var(--rail);
+      color: var(--ink);
+    }
+
+    body {
+      background: #171717;
+      color: var(--ink);
+    }
+
+    .topbar {
+      background: rgba(12, 12, 12, 0.94);
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      color: #f7f7f7;
+    }
+
+    .nav {
+      width: min(var(--max), 100vw);
+      padding: 16px 34px;
+    }
+
+    .brand {
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      color: #9d9d9d;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .navlinks {
+      gap: 6px;
+    }
+
+    .navlinks a {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: transparent;
+      color: #d8d8d8;
+      padding: 8px 11px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    .navlinks a:hover {
+      border-color: #fff;
+      background: #fff;
+      color: #111;
+      transform: translateY(-1px);
+    }
+
+    .page {
+      background: var(--bg);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 36px 120px rgba(0,0,0,0.42);
+    }
+
+    .section {
+      padding: 96px 76px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section:first-child {
+      border-top: 0;
+    }
+
+    .home {
+      min-height: calc(100vh - 88px);
+      gap: 44px;
+      padding-top: 72px;
+      padding-bottom: 72px;
+    }
+
+    .home-grid {
+      grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr);
+      align-items: end;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      margin-bottom: 18px;
+    }
+
+    .intro-title {
+      color: #111;
+      font-size: clamp(54px, 8vw, 92px);
+      line-height: 0.86;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .intro-title .accent {
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 900;
+    }
+
+    .system-line {
+      color: #3b3833;
+      font-size: clamp(18px, 2.2vw, 25px);
+      line-height: 1.08;
+      font-weight: 800;
+      max-width: 640px;
+    }
+
+    .identity-tags {
+      gap: 10px;
+    }
+
+    .identity-tags span,
+    .lane-meta span {
+      border: 1px solid rgba(18,18,18,0.22);
+      background: transparent;
+      color: #1d1c19;
+      padding: 8px 10px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .portrait-panel {
+      background: #111;
+      border: 0;
+      padding: 0;
+      box-shadow: 14px 14px 0 #d8d4ca;
+    }
+
+    .portrait-panel::before {
+      content: "VISUAL CV";
+      left: 18px;
+      top: 18px;
+      color: #fff;
+      background: var(--red);
+      padding: 7px 9px;
+      letter-spacing: 0.06em;
+    }
+
+    .portrait-panel img {
+      height: 430px;
+      object-position: 48% center;
+      filter: none;
+    }
+
+    .portrait-panel figcaption {
+      background: #111;
+      color: #e8e8e8;
+      padding: 12px 14px;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 2px solid #111;
+      border-bottom: 2px solid #111;
+    }
+
+    .category-card {
+      min-height: auto;
+      border: 0;
+      border-bottom: 1px solid rgba(18,18,18,0.18);
+      background: transparent;
+      padding: 18px 0;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 230px;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .category-card:last-child {
+      border-bottom: 0;
+    }
+
+    .category-card:hover {
+      transform: none;
+      border-color: rgba(18,18,18,0.18);
+      background: rgba(217,35,31,0.045);
+    }
+
+    .category-card small {
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .category-card strong {
+      margin-top: 0;
+      color: #111;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 0.95;
+    }
+
+    .category-card span {
+      color: #5f5b54;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .case-head {
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 56px;
+      border-bottom: 2px solid #111;
+      padding-bottom: 24px;
+    }
+
+    .case-index {
+      color: var(--red);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 0.78;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .case-head p {
+      color: #6f6b63;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .case-head h2 {
+      color: #111;
+      font-size: clamp(34px, 5.8vw, 70px);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .locked-grid {
+      gap: 18px;
+    }
+
+    .locked-card {
+      min-height: 260px;
+      border: 1px solid rgba(18,18,18,0.18);
+      background: #fffdf8;
+      padding: 26px;
+      box-shadow: 7px 7px 0 rgba(18,18,18,0.12);
+    }
+
+    .locked-card strong {
+      color: #111;
+      font-size: clamp(30px, 4.4vw, 50px);
+      letter-spacing: 0;
+    }
+
+    .locked-card p,
+    .lane-copy p,
+    .asset-rule {
+      color: #55514b;
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .status-pill {
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: #fff;
+      padding: 7px 9px;
+      letter-spacing: 0.06em;
+    }
+
+    .asset-rule {
+      border: 1px solid rgba(18,18,18,0.24);
+      background: rgba(255,255,255,0.42);
+      padding: 20px;
+    }
+
+    .layout-lab {
+      gap: 58px;
+      margin-top: 0;
+    }
+
+    .layout-lane {
+      border-top: 0;
+      padding-top: 0;
+      grid-template-columns: 0.45fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .layout-lane + .layout-lane {
+      border-top: 1px solid rgba(18,18,18,0.18);
+      padding-top: 48px;
+    }
+
+    .lane-copy {
+      position: sticky;
+      top: 116px;
+    }
+
+    .lane-copy h3 {
+      color: #111;
+      font-size: clamp(30px, 4.2vw, 52px);
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .lane-meta {
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .proof-strip {
+      gap: 12px;
+    }
+
+    .proof-strip img,
+    .proof-mosaic img {
+      border: 1px solid rgba(18,18,18,0.16);
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(18,18,18,0.12);
+    }
+
+    .proof-strip.tall {
+      grid-template-columns: 0.72fr 1.18fr 0.72fr;
+      align-items: start;
+    }
+
+    .proof-strip.tall img {
+      min-height: 430px;
+      aspect-ratio: auto;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .proof-mosaic {
+      grid-template-columns: 1.2fr 0.9fr 0.9fr;
+      grid-template-rows: 190px 190px;
+      gap: 12px;
+    }
+
+    .proof-mosaic img:first-child {
+      grid-row: span 2;
+    }
+
+    .web-case-list {
+      display: grid;
+      gap: 40px;
+    }
+
+    .web-case {
+      border-top: 1px solid rgba(18,18,18,0.18);
+      padding-top: 34px;
+      display: grid;
+      grid-template-columns: minmax(250px, 0.48fr) minmax(0, 1fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .web-case:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .web-copy h3 {
+      color: #111;
+      font-size: clamp(30px, 4.2vw, 48px);
+      line-height: 0.9;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .web-copy p {
+      margin-top: 14px;
+      color: #514d47;
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 720;
+    }
+
+    .role-summary {
+      display: grid;
+      gap: 9px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(18,18,18,0.16);
+    }
+
+    .role-summary div {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      color: #4f4b45;
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 740;
+    }
+
+    .role-summary b {
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .web-media-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: 58px;
+      gap: 10px;
+    }
+
+    .web-media-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border: 1px solid rgba(18,18,18,0.14);
+      background: #fffdf8;
+      box-shadow: 0 8px 18px rgba(18,18,18,0.1);
+    }
+
+    .web-media-grid .portrait {
+      grid-column: span 3;
+      grid-row: span 4;
+      object-position: top center;
+    }
+
+    .web-media-grid .poster {
+      grid-column: span 3;
+      grid-row: span 5;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .web-media-grid .landscape {
+      grid-column: span 6;
+      grid-row: span 3;
+    }
+
+    .web-media-grid .wide {
+      grid-column: span 8;
+      grid-row: span 3;
+    }
+
+    .web-media-grid .square {
+      grid-column: span 4;
+      grid-row: span 3;
+    }
+
+    .web-media-grid .phone {
+      grid-column: span 3;
+      grid-row: span 5;
+      object-position: top center;
+    }
+
+    .web-media-grid .contain {
+      object-fit: contain;
+      padding: 8px;
+      background: #fffdf8;
+    }
+
+    .proof-thumb-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-rows: auto;
+      align-content: start;
+      justify-content: center;
+    }
+
+    .proof-thumb-grid img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #050505;
+    }
+
+    .proof-thumb-grid .lowres {
+      grid-column: span 1;
+      grid-row: auto;
+      width: 100%;
+      max-width: none;
+      height: 240px;
+      justify-self: center;
+    }
+
+    .proof-thumb-grid .wide {
+      grid-column: span 1;
+      grid-row: auto;
+      height: 240px;
+      max-height: none;
+    }
+
+    .proof-thumb-grid .square {
+      grid-column: span 1;
+      grid-row: auto;
+      height: 240px;
+      max-width: none;
+      width: 100%;
+      justify-self: center;
+    }
+
+    .long-proof-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+
+    .long-proof-board img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border: 1px solid rgba(18,18,18,0.14);
+      background: #111;
+      box-shadow: 0 8px 18px rgba(18,18,18,0.1);
+    }
+
+    .video-link-card {
+      min-height: 300px;
+      border: 1px solid rgba(18,18,18,0.18);
+      background: #111;
+      color: #f6f2ea;
+      padding: 28px;
+      display: grid;
+      align-content: space-between;
+      gap: 28px;
+      box-shadow: 0 10px 24px rgba(18,18,18,0.12);
+    }
+
+    .video-link-card small {
+      color: #b7b1a6;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .video-link-card strong {
+      display: block;
+      margin-top: 14px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 0.88;
+      font-weight: 950;
+    }
+
+    .video-link-card a {
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.38);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 12px;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .video-link-card a:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .film-brand-preview,
+    .preview-card,
+    #pan,
+    #content,
+    #content + .section,
+    #events,
+    #events + .section,
+    #events + .section + .section,
+    #mark,
+    #other {
+      display: none;
+    }
+
+    /* v0.4 pixel portfolio direction: cleaner blocks, darker personal tone, explicit role metadata */
+    :root {
+      --pixel-bg: #050505;
+      --pixel-panel: #0c0c0c;
+      --pixel-panel-2: #121212;
+      --pixel-ink: #f4f2ec;
+      --pixel-muted: #8e8a80;
+      --pixel-acid: #c7ff36;
+      --pixel-red: #ff2a18;
+      --pixel-blue: #22a7ff;
+      --pixel-yellow: #ffd84a;
+      --pixel-line: rgba(244, 242, 236, 0.16);
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        #161616;
+      background-size: 12px 12px, 12px 12px, auto;
+      color: var(--pixel-ink);
+    }
+
+    .page {
+      background: var(--pixel-bg);
+      box-shadow: 0 0 0 2px #000, 0 32px 80px rgba(0,0,0,0.58);
+    }
+
+    .section {
+      padding: 82px 64px;
+      border-top: 2px solid var(--pixel-line);
+      background:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px),
+        var(--pixel-bg);
+      background-size: 12px 12px, 12px 12px, auto;
+    }
+
+    .case-head {
+      grid-template-columns: 92px minmax(0, 1fr);
+      align-items: center;
+      border: 0;
+      padding: 0 0 20px;
+      margin-bottom: 28px;
+    }
+
+    .case-index {
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      background: var(--pixel-red);
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 28px;
+      line-height: 1;
+      box-shadow: 6px 6px 0 var(--pixel-acid);
+    }
+
+    .case-head p {
+      color: var(--pixel-acid);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .case-head h2 {
+      color: var(--pixel-ink);
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .film-card-grid,
+    .web-case-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .film-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .film-card,
+    .web-case {
+      border: 2px solid var(--pixel-line);
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+        var(--pixel-panel);
+      background-size: 8px 8px, 8px 8px, auto;
+      box-shadow: 6px 6px 0 rgba(199,255,54,0.2);
+    }
+
+    .web-case {
+      padding: 18px;
+      grid-template-columns: minmax(240px, 0.42fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+      border-top: 2px solid var(--pixel-line);
+    }
+
+    .web-case:first-child {
+      border-top: 2px solid var(--pixel-line);
+      padding-top: 18px;
+    }
+
+    .web-copy h3,
+    .film-card h3 {
+      color: var(--pixel-ink);
+      font-size: clamp(24px, 3.1vw, 38px);
+      line-height: 0.95;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .web-copy p,
+    .film-card p {
+      margin-top: 12px;
+      color: #b7b1a6;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 690;
+    }
+
+    .project-meta,
+    .project-links,
+    .metric-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .project-meta span,
+    .lane-meta span,
+    .metric-row span {
+      border: 1px solid rgba(244,242,236,0.24);
+      background: #070707;
+      color: var(--pixel-ink);
+      padding: 7px 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .project-meta span:first-child {
+      border-color: var(--pixel-red);
+      color: #fff;
+      background: var(--pixel-red);
+    }
+
+    .metric-row span {
+      border-color: rgba(199,255,54,0.36);
+      color: var(--pixel-acid);
+    }
+
+    .project-links a,
+    .video-link-card a,
+    .file-link {
+      display: inline-grid;
+      place-items: center;
+      min-height: 34px;
+      border: 1px solid rgba(244,242,236,0.28);
+      background: #151515;
+      color: var(--pixel-ink);
+      text-decoration: none;
+      padding: 9px 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .project-links a:hover,
+    .video-link-card a:hover,
+    .file-link:hover {
+      background: var(--pixel-acid);
+      border-color: var(--pixel-acid);
+      color: #050505;
+    }
+
+    .web-media-grid img,
+    .proof-strip img,
+    .proof-mosaic img,
+    .long-proof-board img,
+    .film-card img,
+    .media-stack img {
+      border: 1px solid rgba(244,242,236,0.18);
+      background: #050505;
+      box-shadow: none;
+    }
+
+    .film-card {
+      padding: 12px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .film-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .media-stack {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: 74px;
+      gap: 8px;
+    }
+
+    .media-stack img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .media-stack .hero {
+      grid-column: span 8;
+      grid-row: span 4;
+    }
+
+    .media-stack .tall {
+      grid-column: span 4;
+      grid-row: span 5;
+      object-position: top center;
+    }
+
+    .media-stack .small {
+      grid-column: span 4;
+      grid-row: span 2;
+    }
+
+    .media-stack .wide {
+      grid-column: span 8;
+      grid-row: span 2;
+    }
+
+    .video-link-card {
+      min-height: 260px;
+      border: 2px solid var(--pixel-line);
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+        #080808;
+      background-size: 8px 8px, 8px 8px, auto;
+      color: var(--pixel-ink);
+      box-shadow: 6px 6px 0 rgba(255,42,24,0.22);
+    }
+
+    .video-link-card strong {
+      color: var(--pixel-ink);
+      font-size: clamp(28px, 4vw, 48px);
+    }
+
+    .pdf-shot {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pdf-shot img {
+      width: 100%;
+      border: 1px solid rgba(244,242,236,0.18);
+    }
+
+    @media (max-width: 760px) {
+      body {
+        background: #171717;
+      }
+
+      .nav {
+        padding: 14px 18px;
+      }
+
+      .section {
+        padding: 58px 24px;
+      }
+
+      .home {
+        min-height: auto;
+      }
+
+      .home-grid,
+      .case-head,
+      .layout-lane,
+      .locked-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .portrait-panel {
+        box-shadow: 8px 8px 0 #d8d4ca;
+      }
+
+      .portrait-panel img {
+        height: 330px;
+      }
+
+      .lane-copy {
+        position: static;
+      }
+
+      .proof-strip,
+      .proof-strip.tall,
+      .proof-mosaic,
+      .web-case,
+      .role-summary div {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .proof-mosaic img:first-child {
+        grid-row: auto;
+      }
+
+      .proof-strip.tall img,
+      .proof-strip img,
+      .proof-mosaic img {
+        min-height: auto;
+        height: auto;
+      }
+
+      .web-media-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-rows: 56px;
+      }
+
+      .web-media-grid .portrait,
+      .web-media-grid .poster,
+      .web-media-grid .phone {
+        grid-column: span 3;
+        grid-row: span 4;
+      }
+
+      .web-media-grid .landscape,
+      .web-media-grid .wide,
+      .web-media-grid .square {
+        grid-column: span 6;
+        grid-row: span 3;
+      }
+
+      .long-proof-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* v0.5 light pixel personal site direction */
+    :root {
+      --bg: #f7f5f1;
+      --paper: #fffdfa;
+      --ink: #1a1816;
+      --soft: #8d857b;
+      --soft-2: #5c554e;
+      --accent: #e8a020;
+      --red: #ef3b24;
+      --blue: #176dff;
+      --green: #397b53;
+      --line: rgba(26, 24, 22, 0.16);
+      --line-strong: rgba(26, 24, 22, 0.28);
+      --max: 1120px;
+      --px: "Press Start 2P", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--ink);
+      scroll-padding-top: 96px;
+      font-family: var(--sans);
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(26,24,22,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,24,22,0.03) 1px, transparent 1px),
+        var(--bg);
+      background-size: 18px 18px, 18px 18px, auto;
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+
+    #cv {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    .topbar,
+    .page {
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      background: rgba(247, 245, 241, 0.9);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100vw - 32px));
+      padding: 14px 0;
+    }
+
+    .brand {
+      color: var(--ink);
+      font-family: var(--px);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0;
+      gap: 7px;
+    }
+
+    .brand span {
+      color: var(--soft);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .navlinks {
+      gap: 9px;
+    }
+
+    .navlinks a {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: 3px 3px 0 rgba(232, 160, 32, 0.22);
+      color: var(--ink);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.35;
+      padding: 9px 10px;
+      text-transform: uppercase;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease, color 150ms ease;
+    }
+
+    .navlinks a:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 5px 5px 0 var(--accent);
+      color: var(--paper);
+      transform: translate(-2px, -2px);
+    }
+
+    .page {
+      width: min(var(--max), calc(100vw - 32px));
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .section {
+      background: transparent;
+      border-top: 1px solid var(--line);
+      padding: 92px 48px;
+      scroll-margin-top: 96px;
+    }
+
+    .section:first-child {
+      border-top: 0;
+    }
+
+    .home {
+      min-height: calc(100vh - 76px);
+      padding-top: 64px;
+    }
+
+    .home-grid {
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .home-copy {
+      position: relative;
+      gap: 24px;
+      padding-top: 34px;
+    }
+
+    .home-copy::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 0;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      box-shadow: 15px 0 0 var(--accent), 30px 0 0 var(--accent);
+      animation: pixelBlink 1.2s step-end infinite;
+    }
+
+    .eyebrow {
+      color: var(--soft);
+      font-family: var(--px);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.9;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+
+    .intro-title {
+      color: var(--ink);
+      font-family: var(--px);
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.45;
+      text-transform: uppercase;
+    }
+
+    .intro-title .accent {
+      color: var(--accent);
+    }
+
+    .system-line {
+      width: min(650px, 100%);
+      color: var(--soft-2);
+      font-size: 20px;
+      font-weight: 780;
+      letter-spacing: 0;
+      line-height: 1.48;
+    }
+
+    .identity-tags {
+      gap: 9px;
+    }
+
+    .identity-tags span {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.54);
+      box-shadow: 3px 3px 0 rgba(26, 24, 22, 0.08);
+      color: var(--ink);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.45;
+      padding: 9px 10px;
+    }
+
+    .portrait-panel {
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 10px 10px 0 rgba(232, 160, 32, 0.24);
+      padding: 10px;
+    }
+
+    .portrait-panel::before {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      padding: 7px 8px;
+    }
+
+    .portrait-panel img {
+      height: 440px;
+      filter: saturate(0.92) contrast(1.03);
+      object-fit: cover;
+    }
+
+    .portrait-panel figcaption {
+      color: var(--soft-2);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .category-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .category-card {
+      min-height: 152px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 6px 6px 0 rgba(26, 24, 22, 0.08);
+      color: var(--ink);
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 16px;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease, border-color 150ms ease;
+    }
+
+    .category-card:hover {
+      background: var(--paper);
+      border-color: var(--ink);
+      box-shadow: 8px 8px 0 var(--accent);
+      transform: translate(-2px, -2px);
+    }
+
+    .category-card small {
+      color: var(--soft);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.5;
+    }
+
+    .category-card strong {
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    .category-card span {
+      color: var(--soft-2);
+      font-size: 13px;
+      font-weight: 720;
+      line-height: 1.45;
+    }
+
+    .case-head {
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: center;
+      border: 0;
+      margin-bottom: 28px;
+      padding: 0 0 18px;
+    }
+
+    .case-index {
+      width: 70px;
+      height: 70px;
+      background: var(--ink);
+      box-shadow: 6px 6px 0 var(--accent);
+      color: var(--paper);
+      font-family: var(--px);
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .case-head p {
+      color: var(--soft);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .case-head h2 {
+      color: var(--ink);
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1.02;
+    }
+
+    .film-card-grid,
+    .web-case-list {
+      gap: 18px;
+    }
+
+    .film-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .film-card,
+    .web-case,
+    .locked-card {
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 8px 8px 0 rgba(232, 160, 32, 0.18);
+    }
+
+    .film-card {
+      padding: 12px;
+    }
+
+    .film-card img {
+      height: 230px;
+      border: 1px solid var(--line);
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .web-case {
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+      gap: 24px;
+      padding: 22px;
+    }
+
+    .web-case:first-child {
+      padding-top: 22px;
+    }
+
+    .web-copy h3,
+    .film-card h3,
+    .locked-card strong {
+      color: var(--ink);
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1.05;
+    }
+
+    .web-copy p,
+    .film-card p,
+    .locked-card p,
+    .asset-rule {
+      color: var(--soft-2);
+      font-size: 15px;
+      font-weight: 680;
+      letter-spacing: 0;
+      line-height: 1.55;
+    }
+
+    .project-meta,
+    .project-links,
+    .metric-row {
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .project-meta span,
+    .lane-meta span,
+    .metric-row span,
+    .project-links a,
+    .video-link-card a,
+    .file-link,
+    .status-pill {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--ink);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.45;
+      padding: 8px 9px;
+      text-transform: uppercase;
+    }
+
+    .project-meta span:first-child {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .metric-row span {
+      background: rgba(232, 160, 32, 0.13);
+      border-color: rgba(232, 160, 32, 0.45);
+      color: #80540f;
+    }
+
+    .project-links a,
+    .video-link-card a,
+    .file-link {
+      display: inline-grid;
+      min-height: 34px;
+      place-items: center;
+      text-decoration: none;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease, color 150ms ease;
+    }
+
+    .project-links a:hover,
+    .video-link-card a:hover,
+    .file-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--ink);
+      color: var(--ink);
+      transform: translate(-1px, -1px);
+    }
+
+    .web-media-grid img,
+    .proof-strip img,
+    .proof-mosaic img,
+    .long-proof-board img,
+    .film-card img,
+    .media-stack img,
+    .pdf-shot img {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: none;
+    }
+
+    .media-stack {
+      grid-auto-rows: 80px;
+    }
+
+    .media-stack .hero:only-child {
+      grid-column: 1 / -1;
+      grid-row: span 4;
+    }
+
+    .web-media-grid {
+      grid-auto-rows: 72px;
+      gap: 8px;
+    }
+
+    #china-france-production {
+      grid-template-columns: 1fr;
+    }
+
+    #china-france-production .web-copy {
+      max-width: 780px;
+    }
+
+    .long-proof-board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .long-proof-board .team-proof {
+      max-height: 360px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .video-link-card {
+      border: 1px solid var(--line-strong);
+      background: var(--ink);
+      box-shadow: 8px 8px 0 rgba(232, 160, 32, 0.24);
+      color: var(--paper);
+    }
+
+    .video-link-card small {
+      color: rgba(255, 253, 250, 0.66);
+      font-family: var(--px);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .video-link-card strong {
+      color: var(--paper);
+      font-size: 42px;
+      letter-spacing: 0;
+    }
+
+    .pdf-shot {
+      gap: 10px;
+    }
+
+    .asset-rule {
+      border-left: 7px solid var(--accent);
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 6px 6px 0 rgba(26, 24, 22, 0.08);
+      padding: 18px 20px;
+    }
+
+    .locked-grid {
+      gap: 18px;
+    }
+
+    .locked-card {
+      min-height: 240px;
+      padding: 22px;
+    }
+
+    .status-pill {
+      width: fit-content;
+      background: rgba(23, 109, 255, 0.1);
+      border-color: rgba(23, 109, 255, 0.34);
+      color: var(--blue);
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--ink);
+    }
+
+    @keyframes pixelBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.18; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-copy::before,
+      .navlinks a,
+      .category-card,
+      .project-links a,
+      .file-link {
+        animation: none;
+        transition: none;
+      }
+    }
+
+    @media (max-width: 940px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .navlinks {
+        justify-content: flex-start;
+      }
+
+      .home-grid,
+      .web-case,
+      .locked-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .portrait-panel {
+        width: min(420px, 100%);
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        background:
+          linear-gradient(rgba(26,24,22,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(26,24,22,0.03) 1px, transparent 1px),
+          var(--bg);
+        background-size: 18px 18px, 18px 18px, auto;
+        overflow-x: hidden;
+      }
+
+      .page {
+        width: min(100%, 360px);
+      }
+
+      .nav {
+        width: min(100%, 360px);
+      }
+
+      .navlinks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .navlinks a {
+        min-width: 0;
+        text-align: center;
+      }
+
+      .section {
+        padding: 66px 18px;
+      }
+
+      .home-grid,
+      .home-copy,
+      .web-case,
+      .film-card,
+      .locked-card,
+      .category-card {
+        min-width: 0;
+      }
+
+      .intro-title {
+        font-size: 31px;
+        line-height: 1.5;
+      }
+
+      .system-line {
+        font-size: 17px;
+        overflow-wrap: anywhere;
+      }
+
+      .identity-tags {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .identity-tags span {
+        min-width: 0;
+        text-align: center;
+      }
+
+      .case-head {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .case-head h2 {
+        font-size: 32px;
+        line-height: 1.08;
+      }
+
+      .film-card-grid,
+      .long-proof-board {
+        grid-template-columns: 1fr;
+      }
+
+      .film-card img {
+        height: auto;
+        min-height: 220px;
+      }
+
+      .web-copy h3,
+      .film-card h3,
+      .locked-card strong {
+        font-size: 24px;
+      }
+
+      .portrait-panel img {
+        width: 100%;
+        height: 340px;
+      }
+
+      .portrait-panel figcaption {
+        display: grid;
+        gap: 6px;
+      }
+
+      .media-stack {
+        grid-auto-rows: 66px;
+      }
+
+      .web-media-grid {
+        grid-auto-rows: 58px;
+      }
+
+      .project-links a,
+      .file-link {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .navlinks,
+      .identity-tags {
+        grid-template-columns: 1fr;
+      }
+
+      .navlinks a,
+      .identity-tags span,
+      .project-meta span,
+      .metric-row span,
+      .project-links a,
+      .file-link {
+        font-size: 7px;
+      }
+    }
+    /* v0.6: black pixel route preview */
+    :root {
+      --bg: #050505;
+      --paper: #0a0a0c;
+      --panel: #101014;
+      --ink: #f7f4ed;
+      --soft: #8f8a82;
+      --muted: #5f5b55;
+      --accent: #e8a020;
+      --red: #ff2a18;
+      --blue: #168cff;
+      --green: #c7ff36;
+      --line: rgba(247, 244, 237, 0.16);
+      --line-strong: rgba(232, 160, 32, 0.55);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --max: 1180px;
+    }
+
+    html {
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(232, 160, 32, 0.12), transparent 23rem),
+        radial-gradient(circle at 84% 10%, rgba(22, 140, 255, 0.12), transparent 24rem),
+        linear-gradient(180deg, #050505 0%, #090909 50%, #030303 100%);
+      color: var(--ink);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 82%);
+    }
+
+    #cv {
+      opacity: 0.72;
+      mix-blend-mode: screen;
+    }
+
+    #grain {
+      opacity: 0.055;
+      mix-blend-mode: screen;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(5, 5, 5, 0.84);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 32px));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--ink);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      text-shadow: 2px 2px 0 rgba(232, 160, 32, 0.26);
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .navlinks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .navlinks a,
+    .project-links a,
+    .file-link {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ink);
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.72);
+      transition: transform 0.16s ease, border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+    }
+
+    .navlinks a:hover,
+    .navlinks a[data-active="true"],
+    .project-links a:hover,
+    .file-link:hover {
+      transform: translate(-2px, -2px);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232, 160, 32, 0.08);
+    }
+
+    .page {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body[data-view] .section {
+      display: none;
+    }
+
+    body[data-view="home"] .home,
+    body[data-view="athlete"] #athlete,
+    body[data-view="locked"] #locked,
+    body[data-view="mark"] #mark,
+    body[data-view="film"] #film,
+    body[data-view="production"] #production,
+    body[data-view="operations"] #operations,
+    body[data-view="qa"] #qa {
+      display: flex;
+      animation: viewIn 0.34s ease both;
+    }
+
+    .section {
+      width: min(var(--max), calc(100% - 32px));
+      min-height: calc(100vh - 72px);
+      margin: 0 auto;
+      padding: clamp(34px, 6vw, 86px) 0;
+      border: 0;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+
+    .home {
+      justify-content: center;
+      gap: clamp(22px, 4vw, 38px);
+    }
+
+    .home-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 330px);
+      gap: clamp(22px, 4vw, 48px);
+      align-items: center;
+    }
+
+    .home-copy {
+      padding: 0;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .intro-title {
+      color: var(--ink);
+      text-shadow: 4px 4px 0 rgba(255, 42, 24, 0.34), 8px 8px 0 rgba(22, 140, 255, 0.2);
+    }
+
+    .system-line {
+      color: var(--soft);
+      max-width: 540px;
+    }
+
+    .home .identity-tags {
+      display: none;
+    }
+
+    .identity-tags span,
+    .status-pill,
+    .project-meta span,
+    .metric-row span {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--ink);
+      border-radius: 0;
+    }
+
+    .identity-tags span:nth-child(2),
+    .metric-row span:nth-child(2n) {
+      color: var(--accent);
+    }
+
+    .portrait-panel,
+    .category-card,
+    .locked-card,
+    .film-card,
+    .web-case,
+    .asset-rule,
+    .film-note {
+      background: rgba(10, 10, 12, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      box-shadow: var(--shadow), 6px 6px 0 rgba(232, 160, 32, 0.16);
+    }
+
+    .portrait-panel img {
+      border-radius: 0;
+      filter: saturate(1.04) contrast(1.04);
+    }
+
+    .home .portrait-panel {
+      justify-self: end;
+      max-width: 330px;
+    }
+
+    .home .portrait-panel img {
+      height: clamp(260px, 34vw, 380px);
+    }
+
+    .portrait-panel figcaption {
+      color: var(--soft);
+      border-top: 1px solid var(--line);
+    }
+
+    .category-grid {
+      width: 100%;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .category-card {
+      min-height: 132px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      transform: translateZ(0);
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(232, 160, 32, 0.16), transparent 42%),
+        repeating-linear-gradient(0deg, transparent 0 15px, rgba(255, 255, 255, 0.04) 15px 16px);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .category-card:hover {
+      transform: translate(-3px, -3px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow), 9px 9px 0 rgba(232, 160, 32, 0.26);
+    }
+
+    .category-card:hover::before {
+      opacity: 1;
+    }
+
+    .category-card small,
+    .case-head p,
+    .film-note p {
+      color: var(--soft);
+    }
+
+    .category-card strong,
+    .case-head h2,
+    .web-case h3,
+    .film-card h3,
+    .locked-card strong {
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    .category-card span,
+    .web-copy p,
+    .film-card p,
+    .locked-card p {
+      color: var(--soft);
+    }
+
+    .home .category-card {
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+
+    .home .category-card strong {
+      font-size: clamp(16px, 1.8vw, 22px);
+      line-height: 1.12;
+    }
+
+    .home .category-card span {
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .athlete-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2.5vw, 26px);
+      margin-top: clamp(18px, 3vw, 34px);
+    }
+
+    .athlete-choice-card {
+      position: relative;
+      min-height: clamp(360px, 43vw, 560px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      padding: clamp(18px, 3vw, 30px);
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid rgba(247, 244, 237, 0.1);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(5, 5, 5, 0.7)),
+        rgba(8, 8, 10, 0.42);
+      box-shadow:
+        7px 7px 0 rgba(0, 0, 0, 0.75),
+        0 30px 90px rgba(0, 0, 0, 0.28);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .athlete-choice-card:hover {
+      transform: translate(-3px, -3px);
+      border-color: var(--accent);
+      box-shadow:
+        11px 11px 0 rgba(0, 0, 0, 0.8),
+        0 34px 110px rgba(232, 160, 32, 0.12);
+    }
+
+    .athlete-choice-card .choice-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0.42;
+      filter: saturate(0.9) contrast(1.05);
+      background: #050505;
+    }
+
+    .athlete-choice-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.08), rgba(5, 5, 5, 0.82) 64%, rgba(5, 5, 5, 0.96)),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 4px);
+      pointer-events: none;
+    }
+
+    .athlete-choice-copy {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+    }
+
+    .athlete-choice-copy small {
+      color: var(--accent);
+    }
+
+    .athlete-choice-copy strong {
+      color: var(--ink);
+      font-size: clamp(2.1rem, 5vw, 5.2rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .athlete-choice-copy p {
+      max-width: 540px;
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.65;
+    }
+
+    .athlete-choice-copy .choice-label {
+      color: var(--ink);
+      font-size: clamp(0.95rem, 1.7vw, 1.25rem);
+      line-height: 1.45;
+    }
+
+    .athlete-choice-copy .choice-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .athlete-choice-copy .choice-metrics span {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      color: var(--accent);
+      border: 1px solid rgba(232, 160, 32, 0.28);
+      background: rgba(232, 160, 32, 0.06);
+    }
+
+    .athlete-choice-card .choice-portrait {
+      position: absolute;
+      z-index: 1;
+      top: clamp(18px, 2.4vw, 26px);
+      right: clamp(18px, 2.4vw, 26px);
+      width: clamp(96px, 12vw, 152px);
+      aspect-ratio: 3 / 4;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      opacity: 1;
+      filter: none;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.72);
+      background: #050505;
+    }
+
+    .athlete-logic-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .athlete-logic-strip div {
+      padding: 16px;
+      border: 1px solid rgba(247, 244, 237, 0.08);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .athlete-logic-strip strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .athlete-logic-strip p {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.55;
+    }
+
+    #athlete.section {
+      padding-top: clamp(26px, 4vw, 56px);
+    }
+
+    #athlete .case-head {
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+    }
+
+    #athlete .athlete-choice-card .choice-bg {
+      opacity: 0.5;
+    }
+
+    .case-head {
+      width: 100%;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 22px;
+      margin-bottom: 28px;
+    }
+
+    .case-index {
+      border-radius: 0;
+      background: var(--accent);
+      color: #050505;
+      box-shadow: 5px 5px 0 rgba(255, 42, 24, 0.34);
+    }
+
+    .locked-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .locked-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .ip-media {
+      display: grid;
+      grid-template-columns: 0.84fr 1.16fr;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      height: clamp(280px, 34vw, 420px);
+      min-height: 0;
+    }
+
+    .ip-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    .ip-media .tall {
+      grid-row: span 2;
+      object-position: center top;
+    }
+
+    .ip-media .focus-pan {
+      object-position: center 24%;
+    }
+
+    .ip-media .focus-mark {
+      object-position: center 18%;
+    }
+
+    .ip-media .wide {
+      aspect-ratio: 16 / 9;
+    }
+
+    .ip-media .proof-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .film-card-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .film-card {
+      display: grid;
+      grid-template-columns: minmax(170px, 0.78fr) minmax(0, 1.22fr);
+      gap: 16px;
+      padding: 14px;
+      align-items: stretch;
+    }
+
+    .film-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .film-card h3 {
+      color: var(--ink);
+    }
+
+    .film-note {
+      width: 100%;
+      margin-top: 18px;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .film-note strong {
+      color: var(--accent);
+    }
+
+    .web-case-list {
+      width: 100%;
+      gap: 18px;
+    }
+
+    .web-case {
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+      padding: 16px;
+      gap: 18px;
+      scroll-margin-top: 96px;
+    }
+
+    .web-case:nth-child(even) {
+      grid-template-columns: minmax(0, 1.28fr) minmax(280px, 0.72fr);
+    }
+
+    .web-case:nth-child(even) .web-copy {
+      order: 2;
+    }
+
+    .web-media-grid,
+    .media-stack,
+    .long-proof-board,
+    .pdf-shot {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0;
+      padding: 10px;
+    }
+
+    .web-media-grid img,
+    .media-stack img,
+    .long-proof-board img,
+    .pdf-shot img {
+      border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: #050505;
+    }
+
+    .proof-thumb-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-rows: 240px;
+    }
+
+    .proof-thumb-grid .lowres {
+      grid-column: span 1;
+      grid-row: auto;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      object-fit: contain;
+      justify-self: center;
+    }
+
+    .proof-thumb-grid .wide,
+    .proof-thumb-grid .square {
+      grid-column: span 1;
+      grid-row: span 1;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .long-proof-board img {
+      max-height: none;
+    }
+
+    .asset-rule {
+      color: var(--soft);
+      border-left: 6px solid var(--accent);
+    }
+
+    .ip-chapter,
+    .data-board {
+      width: 100%;
+      margin-top: 18px;
+      padding: 18px;
+      background: rgba(10, 10, 12, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      box-shadow: var(--shadow), 6px 6px 0 rgba(232, 160, 32, 0.14);
+    }
+
+    .chapter-head {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .chapter-head small,
+    .data-board small {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .chapter-head h3,
+    .data-board h3 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.08;
+      font-size: clamp(1.2rem, 3vw, 2.5rem);
+    }
+
+    .chapter-head p,
+    .data-board p {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.6;
+    }
+
+    .data-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .data-strip div {
+      min-height: 92px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .data-strip strong {
+      color: var(--ink);
+      font-size: clamp(1rem, 2.2vw, 1.85rem);
+      line-height: 1.05;
+    }
+
+    .data-strip span {
+      color: var(--soft);
+      line-height: 1.35;
+    }
+
+    .data-strip div:nth-child(even) strong {
+      color: var(--accent);
+    }
+
+    .ip-proof-board,
+    .creator-proof-grid,
+    .event-proof-grid,
+    .mark-proof-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .ip-proof-board {
+      grid-template-columns: 1.3fr 0.7fr 0.7fr;
+      align-items: stretch;
+    }
+
+    .creator-proof-grid,
+    .event-proof-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .mark-proof-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .proof-card {
+      min-height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .proof-card img,
+    .ip-proof-board img,
+    .event-proof-grid img,
+    .mark-proof-grid img {
+      width: 100%;
+      height: 100%;
+      min-height: 170px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .proof-card div {
+      padding: 12px;
+    }
+
+    .proof-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .proof-card span {
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    .ip-proof-board .wide-proof {
+      grid-row: span 2;
+    }
+
+    .ip-proof-board .phone-proof {
+      min-height: 420px;
+    }
+
+    .event-proof-grid .wide-proof {
+      grid-column: span 2;
+    }
+
+    .operations-data {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .operations-data div:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+
+    .operations-data div {
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .operations-data strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.08rem;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .operations-data span {
+      color: var(--soft);
+      line-height: 1.35;
+    }
+
+    .account-detail-board {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 10px;
+    }
+
+    .account-detail-board img {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: #050505;
+    }
+
+    .account-detail-board img:first-child {
+      grid-row: span 2;
+      min-height: 520px;
+      object-fit: contain;
+      object-position: top center;
+    }
+
+    .porsche-proof-wall {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-auto-rows: auto;
+      align-content: start;
+    }
+
+    .proof-wall-note {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .proof-wall-note strong {
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .porsche-proof-wall figure {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: #050505;
+    }
+
+    .porsche-proof-wall figcaption {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      display: inline-grid;
+      min-height: 22px;
+      place-items: center;
+      padding: 0 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.72);
+      color: var(--paper);
+      font-size: 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .proof-brief {
+      grid-column: span 4;
+      min-height: 150px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background:
+        linear-gradient(135deg, rgba(232, 160, 32, 0.1), transparent 46%),
+        rgba(255, 255, 255, 0.025);
+      display: grid;
+      align-content: center;
+      gap: 10px;
+    }
+
+    .proof-brief strong {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .proof-brief p {
+      margin: 0;
+      color: #aaa39b;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .proof-brief span {
+      color: var(--paper);
+    }
+
+    .porsche-proof-wall img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      object-position: top center;
+      border: 0;
+      background: transparent;
+    }
+
+    .porsche-proof-wall img:first-child {
+      grid-row: auto;
+      min-height: 0;
+    }
+
+    .porsche-proof-wall figure img:first-child {
+      grid-row: auto;
+      min-height: 0;
+    }
+
+    .porsche-proof-wall .account-shot {
+      grid-column: span 3;
+      height: 260px;
+      max-height: none;
+    }
+
+    .porsche-proof-wall .phone {
+      grid-column: span 1;
+      height: 260px;
+      max-height: none;
+    }
+
+    .porsche-proof-wall .brand-shot {
+      grid-column: span 2;
+      height: 140px;
+      max-height: none;
+      align-self: start;
+    }
+
+    .athlete-flow {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(56px, 8vw, 110px);
+      overflow: hidden;
+    }
+
+    .athlete-case {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(34px, 5vw, 68px);
+    }
+
+    .athlete-hero {
+      width: min(920px, 100%);
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .athlete-hero img {
+      width: min(440px, 78vw);
+      max-width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: contain;
+      object-position: center;
+      border: 1px solid rgba(247, 244, 237, 0.1);
+      box-shadow:
+        0 34px 120px rgba(0, 0, 0, 0.58),
+        0 0 0 1px rgba(232, 160, 32, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      background: #050505;
+    }
+
+    .athlete-hero .mark-hero-image {
+      width: min(460px, 78vw);
+      aspect-ratio: 16 / 10;
+      object-position: center;
+    }
+
+    .athlete-hero h3 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.06;
+      letter-spacing: 0;
+      font-size: clamp(2.15rem, 5.8vw, 5.4rem);
+    }
+
+    .story-heading h3 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-size: clamp(2.5rem, 7vw, 6.4rem);
+    }
+
+    .athlete-hero .subtitle {
+      max-width: 780px;
+      color: var(--soft);
+      font-size: clamp(0.9rem, 1.7vw, 1.35rem);
+      line-height: 1.35;
+    }
+
+    .athlete-hero .body {
+      max-width: 680px;
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .hero-stats {
+      width: min(920px, 100%);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(8px, 1.4vw, 14px);
+      margin-top: 18px;
+    }
+
+    .hero-stats div {
+      min-height: 74px;
+      padding: 10px 12px;
+      border: 1px solid rgba(247, 244, 237, 0.08);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)),
+        rgba(8, 8, 10, 0.28);
+      backdrop-filter: blur(16px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 18px 55px rgba(0, 0, 0, 0.22);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .hero-stats strong {
+      color: var(--accent);
+      font-size: clamp(1.2rem, 2.45vw, 2.18rem);
+      line-height: 1;
+      white-space: nowrap;
+      text-shadow: 0 0 26px rgba(232, 160, 32, 0.28);
+    }
+
+    .hero-stats span {
+      color: var(--soft);
+      font-size: clamp(0.68rem, 1vw, 0.92rem);
+      line-height: 1.25;
+    }
+
+    .story-block {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: clamp(46px, 7vw, 92px) clamp(8px, 2vw, 18px);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(232, 160, 32, 0.055), transparent 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+      border-top: 1px solid rgba(247, 244, 237, 0.055);
+      border-bottom: 1px solid rgba(247, 244, 237, 0.035);
+      box-shadow: none;
+    }
+
+    .story-heading {
+      max-width: 880px;
+      margin: 0 auto clamp(22px, 4vw, 42px);
+      text-align: center;
+    }
+
+    .story-heading small {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .story-heading p {
+      margin: 16px auto 0;
+      max-width: 760px;
+      color: var(--soft);
+      line-height: 1.65;
+    }
+
+    .story-feature {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+      gap: clamp(18px, 4vw, 44px);
+      align-items: center;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .story-feature.reverse {
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+    }
+
+    .story-feature.reverse .feature-copy {
+      order: 2;
+    }
+
+    .feature-copy h4 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: clamp(1.15rem, 2.5vw, 2.3rem);
+      line-height: 1.08;
+    }
+
+    .feature-copy p {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.65;
+    }
+
+    .feature-copy ul {
+      margin: 18px 0 0;
+      padding-left: 18px;
+      color: var(--soft);
+      line-height: 1.65;
+    }
+
+    .feature-copy li::marker {
+      color: var(--red);
+    }
+
+    .feature-media,
+    .media-board {
+      display: grid;
+      gap: 10px;
+    }
+
+    .phone-pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .phone-pair img,
+    .media-board img,
+    .creator-panel img,
+    .series-card img {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background: #050505;
+      display: block;
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.26);
+    }
+
+    .phone-pair img {
+      aspect-ratio: 9 / 16;
+    }
+
+    .creator-panel img {
+      aspect-ratio: 16 / 9;
+    }
+
+    .wide-board {
+      grid-template-columns: 1fr;
+      max-width: 1040px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .wide-board img {
+      height: auto;
+      min-height: 0;
+      max-height: 480px;
+      object-fit: contain;
+    }
+
+    .creator-system {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(24px, 5vw, 54px);
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .creator-panel {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(16px, 3vw, 34px);
+      align-items: center;
+      padding-top: clamp(24px, 5vw, 54px);
+      border-top: 1px solid rgba(247, 244, 237, 0.075);
+    }
+
+    .creator-panel:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .creator-panel:nth-child(even) {
+      grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+    }
+
+    .creator-panel:nth-child(even) .feature-copy {
+      order: 2;
+    }
+
+    .event-board {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 22px;
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .event-board img {
+      flex: 1 1 245px;
+      width: auto;
+      min-width: min(100%, 245px);
+      min-height: 0;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background: #050505;
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    .event-board .span-2 {
+      flex: 2 1 510px;
+      aspect-ratio: 16 / 7;
+      object-fit: contain;
+    }
+
+    .case-divider {
+      width: 100%;
+      min-height: 120px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      border-top: 1px solid rgba(247, 244, 237, 0.06);
+      border-bottom: 1px solid rgba(247, 244, 237, 0.06);
+      text-align: center;
+    }
+
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .series-card {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.014)),
+        rgba(8, 8, 10, 0.2);
+      border: 1px solid rgba(247, 244, 237, 0.075);
+      backdrop-filter: blur(14px);
+    }
+
+    .series-card img {
+      height: 270px;
+      object-position: top center;
+    }
+
+    .series-card div {
+      padding: 14px;
+    }
+
+    .series-card strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .series-card span {
+      color: var(--accent);
+    }
+
+    .mark-original-grid {
+      max-width: 1120px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mark-original-grid .series-card img {
+      height: 360px;
+      object-fit: contain;
+      background: #0b0b10;
+    }
+
+    .mark-original-grid .series-card p {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.55;
+    }
+
+    .mark-expansion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .mark-expansion img {
+      width: 100%;
+      min-height: 280px;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background: #050505;
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    .mark-expansion .wide {
+      grid-column: span 2;
+      object-fit: contain;
+    }
+
+    .commercial-grid {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .commercial-tile {
+      min-height: 188px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      border: 1px solid rgba(247, 244, 237, 0.075);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.012)),
+        rgba(8, 8, 10, 0.22);
+      backdrop-filter: blur(16px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 24px 80px rgba(0, 0, 0, 0.24);
+    }
+
+    .commercial-tile strong {
+      color: var(--ink);
+      font-size: clamp(1.1rem, 1.9vw, 1.65rem);
+      line-height: 1.1;
+    }
+
+    .commercial-tile p {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.5;
+    }
+
+    .commercial-tile span {
+      color: var(--accent);
+      line-height: 1.5;
+    }
+
+    .commercial-feature {
+      width: min(1120px, 100%);
+      margin: 14px auto 0;
+      padding: clamp(20px, 3vw, 34px);
+      border: 1px solid rgba(232, 160, 32, 0.34);
+      background:
+        linear-gradient(135deg, rgba(232, 160, 32, 0.13), rgba(255, 255, 255, 0.018)),
+        rgba(8, 8, 10, 0.34);
+      backdrop-filter: blur(18px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 28px 90px rgba(0, 0, 0, 0.28);
+    }
+
+    .commercial-feature small {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .commercial-feature strong {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(1.6rem, 3.2vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    .commercial-feature p {
+      max-width: 820px;
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.65;
+    }
+
+    @keyframes viewIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .home-grid,
+      .locked-grid,
+      .film-card-grid,
+      .web-case,
+      .web-case:nth-child(even),
+      .chapter-head,
+      .ip-proof-board,
+      .account-detail-board {
+        grid-template-columns: 1fr;
+      }
+
+      .data-strip,
+      .creator-proof-grid,
+      .event-proof-grid,
+      .mark-proof-grid,
+      .operations-data,
+      .hero-stats,
+      .series-grid,
+      .mark-original-grid,
+      .event-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .commercial-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .story-feature,
+      .story-feature.reverse,
+      .creator-panel,
+      .creator-panel:nth-child(even) {
+        grid-template-columns: 1fr;
+      }
+
+      .story-feature.reverse .feature-copy,
+      .creator-panel:nth-child(even) .feature-copy {
+        order: 0;
+      }
+
+      .web-case:nth-child(even) .web-copy {
+        order: 0;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .film-card {
+        grid-template-columns: 1fr;
+      }
+
+      .porsche-proof-wall {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .proof-wall-note {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .porsche-proof-wall .account-shot {
+        grid-column: span 3;
+      }
+
+      .porsche-proof-wall .phone {
+        grid-column: span 1;
+      }
+
+      .porsche-proof-wall .brand-shot {
+        grid-column: span 2;
+      }
+
+      .proof-brief {
+        grid-column: span 4;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        align-items: center;
+        flex-direction: row;
+        padding: 10px 0;
+        gap: 12px;
+      }
+
+      .navlinks {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        width: auto;
+        min-width: 0;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+
+      .navlinks::-webkit-scrollbar {
+        display: none;
+      }
+
+      .navlinks a {
+        width: auto;
+        flex: 0 0 auto;
+        min-width: max-content;
+        justify-content: center;
+        min-height: 28px;
+        padding: 0 8px;
+        font-size: 7px;
+      }
+
+      .brand {
+        flex: 0 0 auto;
+        font-size: 11px;
+      }
+
+      .brand span {
+        font-size: 8px;
+      }
+
+      .case-head {
+        grid-template-columns: 1fr !important;
+        gap: 18px;
+        overflow: hidden;
+      }
+
+      .case-head h2 {
+        max-width: 100%;
+        font-size: clamp(28px, 9vw, 38px);
+        line-height: 1.08;
+        overflow-wrap: anywhere;
+      }
+
+      .athlete-hero h3,
+      .story-heading h3 {
+        font-size: 34px !important;
+        line-height: 1.08;
+        overflow-wrap: anywhere;
+      }
+
+      .athlete-hero .body,
+      .athlete-hero .subtitle,
+      .story-heading p,
+      .feature-copy p,
+      .feature-copy li {
+        overflow-wrap: anywhere;
+      }
+
+      .athlete-hero .body,
+      .athlete-hero .subtitle {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding-inline: 8px;
+        font-size: 12px;
+        box-sizing: border-box;
+      }
+
+      .category-grid,
+      .athlete-choice-grid,
+      .athlete-logic-strip,
+      .ip-media .proof-row {
+        grid-template-columns: 1fr;
+      }
+
+      .athlete-choice-card {
+        min-height: 520px;
+      }
+
+      .data-strip,
+      .creator-proof-grid,
+      .event-proof-grid,
+      .mark-proof-grid,
+      .operations-data,
+      .series-grid,
+      .mark-original-grid,
+      .event-board,
+      .mark-expansion,
+      .phone-pair,
+      .commercial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: calc(100vw - 44px) !important;
+        max-width: calc(100vw - 44px) !important;
+      }
+
+      .hero-stats div {
+        min-width: 0;
+        overflow: hidden;
+        min-height: 62px;
+        padding: 9px 8px;
+      }
+
+      .hero-stats strong {
+        font-size: clamp(18px, 4.8vw, 22px);
+      }
+
+      .hero-stats span {
+        font-size: 10px;
+      }
+
+      .ip-media {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        height: auto;
+      }
+
+      .ip-media img,
+      .ip-media .wide {
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .ip-media .tall {
+        aspect-ratio: 4 / 5;
+      }
+
+      .section {
+        width: calc(100vw - 22px) !important;
+        max-width: calc(100vw - 22px);
+        min-height: calc(100vh - 132px);
+        overflow-x: hidden;
+      }
+
+      .athlete-hero,
+      .story-block {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .athlete-hero img {
+        width: min(320px, 82vw) !important;
+        max-width: 100% !important;
+      }
+
+      .film-note {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .ip-proof-board .wide-proof,
+      .event-proof-grid .wide-proof,
+      .event-board .span-2,
+      .mark-expansion .wide,
+      .account-detail-board img:first-child {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .porsche-proof-wall {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .porsche-proof-wall .account-shot,
+      .porsche-proof-wall img.account-shot:first-child {
+        grid-column: span 2;
+        height: 220px;
+      }
+
+      .porsche-proof-wall .phone {
+        grid-column: span 1;
+        height: 220px;
+      }
+
+      .porsche-proof-wall .brand-shot {
+        grid-column: span 1;
+        height: 150px;
+      }
+
+      .proof-brief {
+        grid-column: 1 / -1;
+        min-height: 128px;
+      }
+
+      .proof-thumb-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 190px;
+      }
+
+      .proof-thumb-grid .lowres,
+      .proof-thumb-grid .wide,
+      .proof-thumb-grid .square {
+        grid-column: span 1;
+        grid-row: span 1;
+        height: 100%;
+      }
     }
   </style>
 </head>
-<body>
+<body data-view="home">
+  <canvas id="cv" aria-hidden="true"></canvas>
+  <div id="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <nav class="nav" aria-label="Preview navigation">
+	      <a class="brand" href="#top">CJ Yan <span>Visual Work System</span></a>
+	      <div class="navlinks">
+	        <a href="#top">Home</a>
+	        <a href="#athlete">Talent IP</a>
+	        <a href="#film">Theatrical</a>
+	        <a href="#production">Production</a>
+	        <a href="#operations">Distribution</a>
+      </div>
+    </nav>
+  </header>
 
-<canvas id="cv"></canvas>
-<div id="grain"></div>
+  <!-- Review mode: public preview only ships confirmed project copy, confirmed local media, and safe image crops. -->
+  <main id="top" class="page">
+    <section class="section home">
+      <div class="home-grid">
+        <div class="home-copy">
+          <p class="eyebrow">CJYAN.ME / VISUAL WORK SYSTEM</p>
+          <h1 class="intro-title">HI, I'M<br>CJ YAN <span class="accent">;)</span></h1>
+          <p class="system-line">Producer and IP builder across China-U.S. sports, entertainment, brands, and platform systems.</p>
+          <div class="identity-tags" aria-label="Portfolio keywords">
+            <span>Producer</span>
+            <span>IP Builder</span>
+            <span>Campaign Lead</span>
+            <span>China / U.S.</span>
+          </div>
+        </div>
+        <figure class="portrait-panel">
+          <img src="assets/img_001.jpg" alt="CJ Yan side-profile portrait">
+          <figcaption><span>Portfolio entrance</span><span>Wechat-ready HTML first</span></figcaption>
+        </figure>
+      </div>
 
-<!-- S1 -->
-<section id="s1">
-  <div class="dot-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-  <p class="s1-label">CJYAN.ME</p>
-  <h1 class="s1-name">
-    <span class="hi">HI, I'M </span>CJ YAN <span class="wink">;)</span>
-  </h1>
-  <div class="pacman-row" id="pacrow">
-    <div class="pac-dots" id="pacdots"></div>
-    <canvas id="pac" class="pac" width="20" height="20"></canvas>
-  </div>
-  <div class="hint" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">
-    <span class="hint-txt">SCROLL</span>
-    <div class="hint-line"></div>
-  </div>
-</section>
+	      <div class="category-grid" aria-label="Portfolio categories">
+	        <a class="category-card" href="#athlete">
+	          <small>01 / Talent IP</small>
+	          <strong>Athlete IP Development</strong>
+	          <span>Pan / Mark</span>
+        </a>
+        <a class="category-card" href="#film">
+          <small>02 / Theatrical</small>
+          <strong>Theatrical Release Campaigns</strong>
+	          <span>Campaign proof</span>
+        </a>
+        <a class="category-card" href="#production">
+          <small>03 / Production</small>
+          <strong>Brand & Commercial Production</strong>
+          <span>Shoots / launch films</span>
+        </a>
+        <a class="category-card" href="#operations">
+          <small>04 / Owned Media</small>
+          <strong>Owned Media & Distribution Systems</strong>
+          <span>Platform surfaces</span>
+        </a>
+      </div>
+    </section>
 
-<!-- S2 -->
-<section id="s2">
-  <div class="kao"   id="k0">(¬‿¬)</div>
-  <p class="trap-a"  id="k1">THIS IS A TRAP.</p>
-  <p class="trap-b"  id="k2">YOU FELL FOR IT.</p>
-  <div class="mid-hint" id="k3">
-    <span class="mid-txt">KEEP GOING</span>
-    <div class="mid-line"></div>
-  </div>
-</section>
+	    <section id="athlete" class="section">
+	      <div class="case-head">
+	        <div class="case-index">01</div>
+	        <div>
+	          <p>Athlete IP / home-market legend vs China-market localization</p>
+	          <h2>Athlete IP Development</h2>
+	        </div>
+	      </div>
+	      <div class="athlete-choice-grid" aria-label="Athlete IP case choices">
+	        <a class="athlete-choice-card" href="#locked">
+	          <img class="choice-bg" src="assets/img_002.jpg" alt="Pan Xiaoting athlete IP case">
+	          <img class="choice-portrait" src="assets/img_003.jpg" alt="Pan Xiaoting portrait">
+	          <div class="athlete-choice-copy">
+	            <small>01A / Domestic Legend</small>
+	            <strong>Pan Xiaoting</strong>
+	            <p class="choice-label">Chinese legend, built at home.</p>
+	            <p>A complete athlete-IP system built around original content, creator verticals, live sports formats, brand partnerships, fashion/editorial value, and commerce.</p>
+	            <div class="choice-metrics"><span>3M -> 15M+</span><span>30M+ followers</span><span>4.4B+ topic ecosystem</span></div>
+	          </div>
+	        </a>
+	        <a class="athlete-choice-card" href="#mark">
+	          <img class="choice-bg" src="assets/img_004.jpg" alt="Mark Williams athlete IP case">
+	          <div class="athlete-choice-copy">
+	            <small>01B / Global Champion</small>
+	            <strong>Mark Williams</strong>
+	            <p class="choice-label">Global champion, localized in China.</p>
+	            <p>A China-facing IP build for an international snooker legend, anchored by original content series, local storytelling, event programming, and commercial partnerships.</p>
+	            <div class="choice-metrics"><span>0 -> 500K+</span><span>2.8B+ topic volume</span><span>$0 -> $1M+</span></div>
+	          </div>
+	        </a>
+	      </div>
+	      <div class="athlete-logic-strip">
+	        <div>
+	          <strong>Chinese Legend At Home</strong>
+	          <p>Pan Xiaoting starts with domestic fame and professional authority. The work is to turn that legacy into platform-native content, events, brand value, and commerce inside her own market.</p>
+	        </div>
+	        <div>
+	          <strong>Global Champion In China</strong>
+	          <p>Mark Williams starts with world-champion credibility, but no local digital system. The work is localization: original series, cultural proximity, tournament storytelling, and commercial entry.</p>
+	        </div>
+	      </div>
+		    </section>
 
-<!-- S3 -->
-<section id="s3">
-  <div class="dot-row" id="k4" style="margin-bottom:2.5rem;">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-  </div>
-  <p class="r-just" id="k5">JUST KIDDING.</p>
-  <p class="r-sub"  id="k6">I'M STILL BUILDING THIS SITE.<br/>MORE COMING SOON.</p>
-  <div class="pixel-border" id="k7">
-    <div class="pb"></div><div class="pb"></div><div class="pb"></div>
-    <div class="pb"></div><div class="pb"></div><div class="pb"></div>
-    <div class="pb"></div><div class="pb"></div>
-  </div>
-</section>
+	    <section id="locked" class="section">
+	      <div class="case-head">
+	        <div class="case-index">01A</div>
+	        <div>
+	          <p>Athlete IP / Chinese legend built at home</p>
+	          <h2>Chinese Legend, Home-Market IP</h2>
+	        </div>
+	      </div>
+	      <div class="athlete-flow">
+	        <article class="athlete-case">
+	          <div class="athlete-hero">
+	            <img src="assets/img_002.jpg" alt="Pan Xiaoting billiards portrait">
+	            <h3>PAN XIAOTING</h3>
+	            <p class="subtitle">10-time world champion · Long-standing WPBA player · China's "Queen of 9-Ball"</p>
+	            <p class="body">I led the digital and commercial build-out for Pan Xiaoting, turning a legendary billiards champion into a platform-native sports IP with original formats, vertical-matched creator partnerships, live event programming, brand endorsements, commerce, and owned-audience products.</p>
+	            <div class="hero-stats">
+	              <div><strong>3M -> 15M+</strong><span>Douyin followers</span></div>
+	              <div><strong>30M+</strong><span>cross-platform followers</span></div>
+	              <div><strong>4.4B+</strong><span>topic-volume ecosystem</span></div>
+	              <div><strong>720M+</strong><span>20-episode original series views</span></div>
+	            </div>
+	          </div>
 
-<footer>© CJ YAN &nbsp;·&nbsp; LOS ANGELES</footer>
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan Xiaoting / Original Content</small>
+	              <h3>Original Content</h3>
+	              <p>Turning sports authority into repeatable short-form formats.</p>
+	            </div>
+	            <div class="story-feature">
+	              <div class="feature-copy">
+	                <h4>POOL CHALLENGE<br>The Challenge Pan</h4>
+	                <p>Built a repeatable athlete-challenge format that turned Pan's professional credibility into a city-by-city short-form sports franchise.</p>
+	                <ul>
+	                  <li>Single video: <strong>100M+</strong> Douyin views</li>
+	                  <li>Series likes: <strong>13M+</strong></li>
+	                  <li>Series comments: <strong>500K+</strong></li>
+	                  <li>Cross-platform video reach: <strong>200M+</strong></li>
+	                </ul>
+	              </div>
+	              <div class="feature-media phone-pair">
+	                <img src="assets/img_005.jpg" alt="Challenge Pan phone video A">
+	                <img src="assets/img_006.jpg" alt="Challenge Pan phone video B">
+	              </div>
+	            </div>
+	            <div class="media-board wide-board" style="margin-top:18px">
+	              <img src="assets/img_007.jpg" alt="Challenge Pan series proof board">
+	            </div>
+	          </section>
 
-<script>
-/* ── wave canvas ── */
-const cv=document.getElementById('cv'),cx=cv.getContext('2d');
-let W,H,t=0;
-function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-rsz();addEventListener('resize',rsz);
-const layers=[
-  {a:30,f:.0017,s:.38,y:.28,op:.09,c:[190,182,170]},
-  {a:20,f:.0023,s:.57,y:.47,op:.075,c:[200,193,182]},
-  {a:36,f:.0013,s:.27,y:.63,op:.065,c:[182,175,163]},
-  {a:14,f:.0031,s:.70,y:.80,op:.055,c:[210,204,196]},
-];
-function drawWave(){
-  cx.clearRect(0,0,W,H);
-  layers.forEach(({a,f,s,y,op,c})=>{
-    const cy=H*y,[r,g,b]=c;
-    cx.beginPath();cx.moveTo(0,H);
-    for(let x=0;x<=W;x+=3){
-      const wy=cy+Math.sin(x*f+t*s)*a+Math.sin(x*f*1.65+t*s*.6+1.3)*a*.4;
-      cx.lineTo(x,wy);
-    }
-    cx.lineTo(W,H);cx.closePath();
-    const g2=cx.createLinearGradient(0,cy-a*2.5,0,cy+a*2.5);
-    g2.addColorStop(0,`rgba(${r},${g},${b},0)`);
-    g2.addColorStop(.5,`rgba(${r},${g},${b},${op})`);
-    g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
-    cx.fillStyle=g2;cx.fill();
-  });
-  t+=.012;requestAnimationFrame(drawWave);
-}
-drawWave();
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan Xiaoting / Creator Collaboration System</small>
+	              <h3>Creator Collaboration System</h3>
+	              <p>Each collaboration was matched to a specific audience vertical, so creator traffic also reinforced Pan's long-term brand categories.</p>
+	            </div>
+	            <div class="creator-system">
+	              <article class="creator-panel">
+	                <div class="feature-copy">
+	                  <h4>Pan x Du Jiao Show</h4>
+	                  <p>A top entertainment and overseas-Chinese culture crossover. The goal was to pull billiards out of pure skill teaching and make Pan feel conversational, humorous, and recognizable to a younger lifestyle audience.</p>
+	                  <ul>
+	                    <li>Reached hot-topic #1 for 2 days</li>
+	                    <li><strong>72.15M+</strong> views</li>
+	                    <li>5 videos · 210K+ likes · 30K+ comments</li>
+	                  </ul>
+	                </div>
+	                <img src="assets/img_008.jpg" alt="Pan x Du Jiao Show proof">
+	              </article>
+	              <article class="creator-panel">
+	                <div class="feature-copy">
+	                  <h4>Pan x Senior Xiaogang</h4>
+	                  <p>An automotive-vertical collaboration designed to compound Pan's long-running value in car-brand partnerships, not just chase one-off traffic.</p>
+	                  <ul>
+	                    <li>3 videos with automotive creators</li>
+	                    <li>Top 5 hot-topic ranking · 5 days trending</li>
+	                    <li><strong>50M+</strong> heat · 1.1M+ likes · 18K+ comments</li>
+	                  </ul>
+	                </div>
+	                <img src="assets/img_009.jpg" alt="Pan x Senior Xiaogang proof">
+	              </article>
+	              <article class="creator-panel">
+	                <div class="feature-copy">
+	                  <h4>Pan x Da Sima</h4>
+	                  <p>Gaming culture entry through a well-known Chinese gaming creator and livestream personality.</p>
+	                  <ul>
+	                    <li><strong>60M+</strong> Douyin views</li>
+	                    <li>17M+ likes · 29K+ comments</li>
+	                    <li>4M+ Bilibili views</li>
+	                  </ul>
+	                </div>
+	                <img src="assets/img_010.jpg" alt="Pan x Da Sima proof">
+	              </article>
+	              <article class="creator-panel">
+	                <div class="feature-copy">
+	                  <h4>Pan x MediaStorm</h4>
+	                  <p>A film-tech and lifestyle crossover that used high-speed cinematography to reframe billiards as visual storytelling and precision craft.</p>
+	                  <ul>
+	                    <li>No.2 Bilibili video across all categories that month</li>
+	                    <li><strong>27M+</strong> Douyin views · 890K+ likes</li>
+	                    <li><strong>8.73M+</strong> Bilibili views · 110K+ coins</li>
+	                  </ul>
+	                </div>
+	                <img src="assets/img_011.jpg" alt="Pan x MediaStorm proof">
+	              </article>
+	            </div>
+	          </section>
 
-/* ── pac-man dots ── */
-const dotsEl=document.getElementById('pacdots');
-const pacRowEl=document.getElementById('pacrow');
-function buildDots(){
-  dotsEl.innerHTML='';
-  const n=Math.floor((pacRowEl.offsetWidth-40)/21);
-  for(let i=0;i<n;i++){
-    const d=document.createElement('div');
-    d.className='pac-dot';d.id='pd'+i;
-    dotsEl.appendChild(d);
-  }
-}
-buildDots();addEventListener('resize',buildDots);
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan Xiaoting / Original Live Programs & Sports Event</small>
+	              <h3>Billiards King: City Challenge</h3>
+	              <p>From content IP to live sports programming.</p>
+	            </div>
+	            <div class="media-board wide-board">
+	              <img src="assets/img_012.jpg" alt="Billiards King logo">
+	            </div>
+	            <div class="hero-stats">
+	              <div><strong>5.68M+</strong><span>unique viewers</span></div>
+	              <div><strong>20M+</strong><span>total views</span></div>
+	              <div><strong>140K</strong><span>peak concurrent viewers</span></div>
+	              <div><strong>31K+</strong><span>avg. concurrent viewers</span></div>
+	            </div>
+	            <div class="story-feature" style="margin-top:24px">
+	              <div class="feature-copy">
+	                <h4>Designed for the room and the feed.</h4>
+	                <p>A city amateur billiards challenge launched by my team and Pan Xiaoting. The format gave local players a chance to compete, be seen, and stand next to one of China's most iconic billiards champions.</p>
+	              </div>
+	              <div class="media-board wide-board">
+	                <img src="assets/img_013.jpg" alt="Billiards King live dashboard">
+	              </div>
+	            </div>
+	            <div class="event-board">
+	              <img class="span-2" src="assets/img_014.jpg" alt="Billiards King run of show">
+	              <img src="assets/img_015.jpg" alt="Billiards King game mechanics">
+	              <img src="assets/img_016.jpg" alt="Billiards King arena build">
+	              <img src="assets/img_017.jpg" alt="Billiards King talent casting">
+	              <img class="span-2" src="assets/img_018.jpg" alt="Billiards King promo funnel">
+	            </div>
+	          </section>
 
-/* ── pac-man draw ── */
-const pacC=document.getElementById('pac'),pcx=pacC.getContext('2d');
-let mouth=true;
-setInterval(()=>{
-  mouth=!mouth;
-  pcx.clearRect(0,0,20,20);
-  pcx.fillStyle='#E8A020';
-  pcx.beginPath();
-  const m=mouth?.28:.04;
-  pcx.arc(10,10,9,m*Math.PI,(2-m)*Math.PI);
-  pcx.lineTo(10,10);pcx.closePath();pcx.fill();
-  pcx.fillStyle='#1A1816';
-  pcx.fillRect(12,4,3,3);
-},180);
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan Xiaoting / Official Live Event</small>
+	              <h3>Meet the Masters</h3>
+	              <p>WST x Juss Shanghai Masters official livestream activation connecting athlete IP, international tournament programming, platform promotion, and live sports media.</p>
+	            </div>
+	            <div class="media-board wide-board">
+	              <img src="assets/img_019.jpg" alt="Meet the Masters poster">
+	            </div>
+	            <div class="hero-stats">
+	              <div><strong>57K+</strong><span>Douyin peak concurrent</span></div>
+	              <div><strong>3.01M+</strong><span>Douyin unique viewers</span></div>
+	              <div><strong>7.54M+</strong><span>Douyin impressions</span></div>
+	              <div><strong>207K</strong><span>CBSA WeChat total views</span></div>
+	            </div>
+	            <div class="event-board">
+	              <img src="assets/img_020.jpg" alt="Meet the Masters vertical poster">
+	              <img class="span-2" src="assets/img_021.jpg" alt="Meet the Masters group photo">
+	              <img class="span-2" src="assets/img_022.jpg" alt="Meet the Masters platform promotion proof">
+	            </div>
+	          </section>
 
-/* ── eat dots ── */
-function eatDots(){
-  const pr=pacC.getBoundingClientRect(),rr=pacRowEl.getBoundingClientRect();
-  const px=pr.left-rr.left+pr.width/2;
-  document.querySelectorAll('.pac-dot').forEach(d=>{
-    const dr=d.getBoundingClientRect();
-    const dx=dr.left-rr.left+dr.width/2;
-    d.style.opacity=dx<px?'0':'1';
-  });
-  requestAnimationFrame(eatDots);
-}
-eatDots();
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan Xiaoting / Brand & Commercial Value</small>
+	              <h3>Brand Portfolio & Commercial Value</h3>
+	              <p>The content system did not stop at views. It turned sports authority into paid brand categories, fashion and editorial relevance, platform-level roles, and commerce conversion.</p>
+	            </div>
+	            <div class="commercial-grid">
+	              <article class="commercial-tile">
+	                <strong>Flagship Endorsements</strong>
+	                <p>Selected high-signal deals across beauty, luxury automotive, tech, and lifestyle.</p>
+	                <span>Estée Lauder · Mercedes-Benz She's Mercedes · Toyota Avalon · Huawei nova 4 · Continental Tire</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Automotive Value</strong>
+	                <p>Creator work and event work reinforced one of Pan's strongest commercial categories.</p>
+	                <span>Buick · Ford · Jaguar · Red Bull · Geely Icon · GAC Aion · 5+ years of automotive partnerships</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Fashion & Editorial</strong>
+	                <p>Fashion-facing appearances helped move the athlete IP beyond the billiards category.</p>
+	                <span>Paris SS16 · NYFW SS18 · Baselworld 2017 · Flying Life cameo</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Platform Programs</strong>
+	                <p>Pan's authority translated into official commentary, esports crossover, and platform-trusted roles.</p>
+	                <span>Douyin FIFA World Cup 2022 · LPL · KPL · League of Legends World Championship guest appearances</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Commerce Conversion</strong>
+	                <p>Visibility was converted into livestream sales, brand-event commerce, and productized athlete value.</p>
+	                <span>Taobao · Douyin · Kuaishou · JD · Crazy Yang 2B+ reach / 10hr Douyin #1 · Haier brand-event commerce</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Commercial Outcome</strong>
+	                <p>The system made Pan easier to sell across multiple categories without reducing her to a one-off viral profile.</p>
+	                <span>Sports authority → brand trust → cultural relevance → direct conversion</span>
+	              </article>
+	            </div>
+	            <article class="commercial-feature">
+	              <small>Final Brand Signal / Fashion Editorial Value</small>
+	              <strong>Harper's BAZAAR / 时尚芭莎</strong>
+	              <p>This is the final commercial-value point: Pan's athlete IP was not only sold through sports, automotive, and livestream commerce. Fashion-editorial recognition such as Harper's BAZAAR helped place her inside a higher-end lifestyle and cultural context, supporting broader brand partnerships beyond billiards.</p>
+	            </article>
+	          </section>
+	        </article>
+	      </div>
+		    </section>
 
-/* ── scroll reveal ── */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
-},{threshold:.15});
-['k0','k1','k2','k3','k4','k5','k6','k7'].forEach(id=>{
-  const el=document.getElementById(id);if(el)io.observe(el);
-});
-</script>
+	    <section id="mark" class="section">
+	      <div class="case-head">
+	        <div class="case-index">01B</div>
+	        <div>
+	          <p>Athlete IP / global champion localized in China</p>
+	          <h2>Global Champion, China-Market IP</h2>
+	        </div>
+	      </div>
+	      <div class="athlete-flow">
+
+	        <article class="athlete-case">
+	          <div class="athlete-hero">
+	            <img class="mark-hero-image" src="assets/img_004.jpg" alt="Mark Williams trophy portrait">
+	            <h3>MARK WILLIAMS</h3>
+	            <p class="subtitle">3-time World Snooker Champion · The Golden Left Hand · Class of '92 · Former World No.1</p>
+	            <p class="body">Built Mark Williams' China-facing athlete IP from zero through original content series, local storytelling, event programming, brand partnerships, and commercial value.</p>
+	            <div class="hero-stats">
+	              <div><strong>0 -> 500K+</strong><span>China-facing followers</span></div>
+	              <div><strong>0 -> 350K+</strong><span>Douyin followers</span></div>
+	              <div><strong>2.8B+</strong><span>topic volume</span></div>
+	              <div><strong>$0 -> $1M+</strong><span>brand value</span></div>
+	            </div>
+	          </div>
+
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Mark Williams / The Market-Entry Challenge</small>
+	              <h3>The Market-Entry Challenge</h3>
+	              <p>Mark Williams had elite global snooker credibility, but no China-facing digital system before 2023. The task was to make a world champion feel current, local, and emotionally accessible without losing his authority.</p>
+	            </div>
+	          </section>
+
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Mark Williams / Original Content System</small>
+	              <h3>Original Content System</h3>
+	              <p>The Mark case was not only a market-entry story. It was built through repeatable original formats that localized him as a person, a competitor, and a guide into Chinese billiards culture.</p>
+	            </div>
+	            <div class="series-grid mark-original-grid">
+	              <article class="series-card">
+	                <img src="assets/img_023.jpg" alt="Finding Folk Masters proof">
+	                <div>
+	                  <strong>Finding Folk Masters / 寻找民间高手</strong>
+	                  <span>6 episodes · 21.89M+ views</span>
+	                  <p>Mark discovers grassroots Chinese billiards talent, turning a foreign champion into a curious local observer.</p>
+	                </div>
+	              </article>
+	              <article class="series-card">
+	                <img src="assets/img_024.jpg" alt="Mark in China proof">
+	                <div>
+	                  <strong>Mark in China / 马桂莲在中国</strong>
+	                  <span>60 episodes · 72.16M+ views</span>
+	                  <p>A lifestyle-localization series built around Mark's everyday encounters, humor, travel, food, and cultural discovery.</p>
+	                </div>
+	              </article>
+	              <article class="series-card">
+	                <img src="assets/img_025.jpg" alt="Tournament Dispatch proof">
+	                <div>
+	                  <strong>Tournament Dispatch / 赛场速递</strong>
+	                  <span>87 episodes · 44.55M+ views</span>
+	                  <p>Competition-day vlogs and quick dispatches that kept Mark present during tournaments instead of only appearing in polished campaign moments.</p>
+	                </div>
+	              </article>
+	              <article class="series-card">
+	                <img src="assets/img_026.jpg" alt="Mark Williams competition proof">
+	                <div>
+	                  <strong>Zheng Yubo Rivalry Topic</strong>
+	                  <span>26M+ topic plays</span>
+	                  <p>A flagship cross-format rivalry narrative connecting Mark with Zheng Yubo and China's professional billiards conversation.</p>
+	                </div>
+	              </article>
+	            </div>
+	          </section>
+
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Mark Williams / Platform, Events & Commercial Expansion</small>
+	              <h3>Platform, Events & Commercial Expansion</h3>
+	              <p>The China-facing platform expanded into content launches, tournament visibility, official event activations, cue-brand partnerships, and long-term commercial value.</p>
+	            </div>
+	            <div class="mark-expansion">
+	              <img src="assets/img_027.jpg" alt="Mark Williams Kuaishou proof">
+	              <img src="assets/img_028.jpg" alt="Mark Williams Zhangyu proof">
+	              <img class="wide" src="assets/img_029.jpg" alt="Mark Williams campaign banner">
+	              <img class="wide" src="assets/img_030.jpg" alt="Mark Williams event proof">
+	            </div>
+	          </section>
+	        </article>
+	      </div>
+		    </section>
+
+    <section id="film" class="section">
+      <div class="case-head">
+        <div class="case-index">02</div>
+        <div>
+          <p>Theatrical marketing / parallel proof cards</p>
+          <h2>Theatrical Release Campaigns</h2>
+        </div>
+      </div>
+      <div class="film-card-grid">
+        <article class="film-card">
+          <img src="assets/img_031.jpg" alt="Despicable Me 4 campaign proof">
+          <div>
+            <h3>Despicable Me 4 / 神偷奶爸4</h3>
+            <div class="project-meta"><span>Role: Producer / Strategist</span><span>Year: 2024</span><span>Platform: Douyin</span></div>
+            <p>Ran the China word-of-mouth campaign around authentic audience reaction, using special screenings as the content engine instead of relying on paid-style promotion.</p>
+            <div class="metric-row"><span>50M+ KOL matrix</span><span>100% WOM strategy</span></div>
+          </div>
+        </article>
+	        <article class="film-card">
+	          <img src="assets/img_032.jpg" alt="The Wild Robot campaign proof">
+	          <div>
+	            <h3>The Wild Robot / 荒野机器人</h3>
+	            <div class="project-meta"><span>Role: Producer / Strategist</span><span>Year: 2024</span><span>Platform: Douyin</span></div>
+	            <p>Built a quieter, emotion-led creator campaign around long-form essays and immersive screenings, matching the film's nature-and-connection tone.</p>
+	            <div class="metric-row"><span>60M+ KOL matrix</span><span>Deep-dive creator essays</span></div>
+	          </div>
+	        </article>
+	        <article class="film-card">
+	          <img src="assets/img_033.jpg" alt="River's Edge campaign proof">
+	          <div>
+            <h3>River's Edge / 河狸变身计划</h3>
+            <div class="project-meta"><span>Role: Producer / Strategist</span><span>Special screening</span><span>Chengdu activation</span></div>
+            <p>Anchored the China rollout on a regional special-screening event and carried the campaign through in-house Chinese-market assets, localization, and creator coverage.</p>
+            <div class="metric-row"><span>30M+ KOL matrix</span><span>50+ creators activated</span></div>
+          </div>
+        </article>
+        <article class="film-card">
+          <img src="assets/img_034.jpg" alt="The Ministry of Ungentlemanly Warfare campaign proof">
+          <div>
+            <h3>The Ministry of Ungentlemanly Warfare / 盟军敢死队</h3>
+            <div class="project-meta"><span>Role: Producer / Strategist</span><span>China release</span><span>Creator campaign</span></div>
+            <p>China-facing release campaign for the action title, built around genre-audience seeding, creator explanations, platform topic proof, and Douyin/Xiaohongshu distribution.</p>
+            <div class="metric-row"><span>Action-film audience seeding</span><span>Creator matrix</span></div>
+          </div>
+        </article>
+	      </div>
+	    </section>
+
+    <section id="production" class="section">
+      <div class="case-head">
+        <div class="case-index">03</div>
+        <div>
+          <p>Production service / branded films / launch content</p>
+          <h2>Brand & Commercial Production</h2>
+        </div>
+      </div>
+      <div class="web-case-list">
+        <article class="web-case" id="netease-dunk-city">
+          <div class="web-copy">
+            <h3>NetEase Games × Dunk City Dynasty</h3>
+            <div class="project-meta"><span>Role: Executive Producer</span><span>Client: NetEase Games</span><span>Year: 2025</span></div>
+            <p>Official U.S. launch content for NetEase's mobile basketball title, featuring NBA champion and ESPN analyst Kendrick Perkins. The project bridged Chinese gaming with the American sports-media ecosystem.</p>
+            <div class="metric-row"><span>U.S. launch film</span><span>Campaign videos</span><span>In-game voice recording</span></div>
+            <div class="project-links">
+              <a href="https://www.youtube.com/watch?v=lXVmdCKOUuI" target="_blank" rel="noopener">YouTube 01</a>
+              <a href="https://www.youtube.com/watch?v=L-WF_gN0uLM" target="_blank" rel="noopener">YouTube 02</a>
+              <a href="https://www.youtube.com/watch?v=ugPCePUlgw0" target="_blank" rel="noopener">YouTube 03</a>
+            </div>
+          </div>
+          <div class="media-stack">
+            <img class="hero" src="assets/img_035.jpg" alt="NetEase Dunk City Dynasty Kendrick Perkins slate proof">
+          </div>
+        </article>
+        <article class="web-case">
+          <div class="web-copy">
+            <h3>Under Armour</h3>
+            <div class="project-meta"><span>Role: Producer</span><span>Client: Under Armour</span><span>Year: 2026</span></div>
+            <p>Athlete documentary at Under Armour's global HQ in Baltimore featuring Chinese national-team athletes across multiple sports, coordinated cross-border and executed on location in the U.S.</p>
+            <div class="metric-row"><span>UA Global HQ</span><span>Sports documentary</span><span>Cross-border production</span></div>
+          </div>
+          <div class="web-media-grid">
+            <img class="phone" src="assets/img_036.jpg" alt="Under Armour production proof A">
+            <img class="phone" src="assets/img_037.jpg" alt="Under Armour production proof B">
+            <img class="phone" src="assets/img_038.jpg" alt="Under Armour production proof C">
+            <img class="phone" src="assets/img_039.jpg" alt="Under Armour production proof D">
+          </div>
+        </article>
+        <article class="web-case" id="abercrombie-hollister">
+          <div class="web-copy">
+            <h3>Abercrombie & Fitch Group</h3>
+            <div class="project-meta"><span>Role: Producer</span><span>Client: A&F + Hollister</span><span>Year: 2024-2026</span></div>
+            <p>China-side TVC partnership across A&F and Hollister: eight lifestyle TVCs across seasonal launches, including campaigns featuring 2024 A&F China brand ambassador Li Xian.</p>
+            <div class="metric-row"><span>8 TVCs</span><span>2 sub-brands</span><span>Li Xian campaign</span></div>
+            <div class="project-links">
+              <a href="https://vimeo.com/1189262277?fl=tl&amp;fe=ec" target="_blank" rel="noopener">Vimeo 01</a>
+              <a href="https://vimeo.com/1189262863?fl=tl&amp;fe=ec" target="_blank" rel="noopener">Vimeo 02</a>
+              <a href="https://vimeo.com/1189262274?fl=tl&amp;fe=ec" target="_blank" rel="noopener">Vimeo 03</a>
+              <a href="https://vimeo.com/1189262276?fl=tl&amp;fe=ec" target="_blank" rel="noopener">Vimeo 04</a>
+            </div>
+          </div>
+          <div class="media-stack">
+            <img class="hero" src="assets/img_040.jpg" alt="Abercrombie and Fitch campaign still A">
+            <img class="small" src="assets/img_041.jpg" alt="A&F winter TVC thumbnail">
+            <img class="small" src="assets/img_042.jpg" alt="A&F summer TVC thumbnail">
+            <img class="small" src="assets/img_043.jpg" alt="A&F lifestyle still">
+          </div>
+        </article>
+        <article class="web-case">
+          <div class="web-copy">
+            <h3>GAP</h3>
+            <div class="project-meta"><span>Role: Producer / Director</span><span>Client: GAP China</span><span>2021-2023</span></div>
+            <p>Three-year production partnership covering flat graphics, activity shoots, e-commerce assets, brand content, and event marketing for a high-volume fashion-retail content pipeline.</p>
+            <div class="metric-row"><span>2,000+ videos</span><span>50+ PR events / year</span><span>Flat graphics + shoots</span></div>
+          </div>
+          <div class="web-media-grid">
+            <img class="poster" src="assets/img_044.jpg" alt="GAP flat graphic proof A">
+            <img class="poster" src="assets/img_045.jpg" alt="GAP flat graphic proof B">
+            <img class="poster" src="assets/img_046.jpg" alt="GAP flat graphic proof C">
+            <img class="poster" src="assets/img_047.jpg" alt="GAP flat graphic proof D">
+          </div>
+        </article>
+        <article class="web-case">
+          <div class="web-copy">
+            <h3>POP MART NYC</h3>
+            <div class="project-meta"><span>Role: Producer</span><span>Client: POP MART</span><span>Year: 2025</span></div>
+            <p>On-location content for Pop Mart's New York City pop-up at Penn Station, captured with a street-fashion treatment for the brand's U.S. market-entry moment.</p>
+            <div class="metric-row"><span>NYC activation</span><span>Street-fashion lens</span><span>Pop-up proof</span></div>
+          </div>
+          <div class="web-media-grid">
+            <img class="landscape" src="assets/img_048.jpg" alt="POP MART NYC proof A">
+            <img class="landscape" src="assets/img_049.jpg" alt="POP MART NYC proof B">
+            <img class="landscape" src="assets/img_050.jpg" alt="POP MART NYC proof C">
+            <img class="landscape" src="assets/img_051.jpg" alt="POP MART NYC proof D">
+          </div>
+        </article>
+        <article class="web-case" id="china-france-production">
+          <div class="web-copy">
+            <h3>Manuel de l'escroquerie franco-chinoise</h3>
+            <div class="project-meta"><span>Role: Producer / Line Producer</span><span>Client: Escargot Productions</span><span>Year: 2017</span></div>
+            <p>A 12-episode China-France official co-production web series using cross-cultural comedy to explore scams, misunderstanding, and social friction between China and France. The long still strips stay full because they show the breadth of scenes and production coverage.</p>
+            <div class="metric-row"><span>$4M budget</span><span>12 episodes</span><span>China unit</span></div>
+            <div class="project-links">
+              <a href="https://www.xinpianchang.com/a10383746?from=webShare&amp;channel=copyLink" target="_blank" rel="noopener">Trailer link</a>
+            </div>
+          </div>
+          <div class="long-proof-board">
+            <img src="assets/img_052.jpg" alt="China-France long still strip A">
+            <img src="assets/img_053.jpg" alt="China-France long still strip B">
+            <img class="team-proof" src="assets/img_054.jpg" alt="China-France co-production crew proof">
+            <img class="team-proof" src="assets/img_055.jpg" alt="China-France Shanghai crew proof">
+          </div>
+        </article>
+        <article class="web-case" id="i-love-you-china-mv">
+          <div class="web-copy">
+            <h3>I Love You, China MV</h3>
+            <div class="project-meta"><span>Role: Producer / Executive Producer</span><span>Client: People's Daily</span><span>Year: 2017</span></div>
+            <p>National Day music video commissioned by People's Daily, featuring TFBOYS and Tia Ray. Use a small still set plus the official link: the page needs visual proof, while the link remains the verification path.</p>
+            <div class="metric-row"><span>National Day MV</span><span>TFBOYS</span><span>Tia Ray</span></div>
+            <div class="project-links">
+              <a href="https://www.xinpianchang.com/a90287?from=webShare&amp;channel=copyLink" target="_blank" rel="noopener">Watch on Xinpianchang</a>
+            </div>
+          </div>
+          <div class="media-stack">
+            <img class="hero" src="assets/img_056.jpg" alt="I Love You China MV still">
+            <img class="small" src="assets/img_057.jpg" alt="I Love You China MV green screen proof">
+            <img class="small" src="assets/img_058.jpg" alt="I Love You China MV green-screen group proof">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="operations" class="section">
+      <div class="case-head">
+        <div class="case-index">04</div>
+        <div>
+          <p>Platform distribution / owned media / brand content systems</p>
+          <h2>Owned Media & Distribution Systems</h2>
+        </div>
+      </div>
+	      <div class="web-case-list">
+	        <article class="web-case">
+	          <div class="web-copy">
+	            <h3>Oriental Shopping</h3>
+	            <div class="project-meta"><span>Role: Distribution Strategy + Matrix Architect</span><span>Client: Oriental Shopping</span><span>Shanghai TV</span></div>
+	            <p>Livestream-commerce and short-video distribution system for Shanghai TV's e-commerce arm: a 15+ channel matrix across WeChat Channels and Douyin, built around content seeding, livestream sales, and App conversion.</p>
+	            <div class="metric-row"><span>15+ channels</span><span>30+ daily livestreams</span><span>200+ live hours / day</span><span>¥1M+ monthly GMV</span></div>
+	            <div class="operations-data">
+	              <div><strong>15+</strong><span>channels built from zero</span></div>
+	              <div><strong>30+</strong><span>daily livestream rooms</span></div>
+	              <div><strong>200h+</strong><span>live content per day</span></div>
+	              <div><strong>7M+</strong><span>IP-channel total plays</span></div>
+	              <div><strong>40%+</strong><span>avg. completion rate</span></div>
+	            </div>
+	          </div>
+	          <div class="pdf-shot">
+	            <img src="assets/img_059.jpg" alt="Oriental Shopping case proof from PDF">
+	            <a class="file-link" href="assets/doc_001.pdf" target="_blank" rel="noopener">Open source PDF</a>
+	          </div>
+        </article>
+        <article class="web-case">
+	          <div class="web-copy">
+	            <h3>Porsche</h3>
+	            <div class="project-meta"><span>Role: Owned Media Strategy + Production Director</span><span>Client: Porsche China</span><span>2020-2021</span></div>
+	            <p>Built Porsche China's official Douyin channel as a premium short-video distribution surface, balancing audience growth with luxury brand equity.</p>
+	            <div class="metric-row"><span>300K+ followers gained</span><span>50+ videos produced</span><span>30M+ peak single video</span><span>240K+ likes on peak video</span></div>
+	            <div class="operations-data">
+	              <div><strong>1.195M</strong><span>official-channel proof followers</span></div>
+	              <div><strong>345</strong><span>published works shown</span></div>
+	              <div><strong>8.204M</strong><span>official-channel proof likes</span></div>
+	              <div><strong>Premium</strong><span>editorial content system</span></div>
+	              <div><strong>Identity</strong><span>next-phase Douyin language</span></div>
+	            </div>
+	          </div>
+	          <div class="account-detail-board porsche-proof-wall">
+	            <div class="proof-wall-note">
+	              <strong>Proof Set</strong>
+	              <span>Official Douyin surface / short-video proof / brand identity</span>
+	            </div>
+	            <figure class="account-shot">
+	              <img src="assets/img_060.jpg" alt="Porsche Douyin channel detail proof">
+	              <figcaption>Channel Detail</figcaption>
+	            </figure>
+	            <figure class="phone">
+	              <img src="assets/img_061.jpg" alt="Porsche channel proof B">
+	              <figcaption>Video Proof</figcaption>
+	            </figure>
+	            <figure class="phone">
+	              <img src="assets/img_062.jpg" alt="Porsche channel proof C">
+	              <figcaption>Series Proof</figcaption>
+	            </figure>
+	            <figure class="phone">
+	              <img src="assets/img_063.jpg" alt="Porsche channel proof D">
+	              <figcaption>Content Surface</figcaption>
+	            </figure>
+	            <figure class="brand-shot contain">
+	              <img src="assets/img_064.jpg" alt="Porsche brand proof">
+	              <figcaption>Brand Identity</figcaption>
+	            </figure>
+	            <div class="proof-brief">
+	              <strong>Brand Channel Proof</strong>
+	              <p><span>What this shows:</span> an official luxury-brand Douyin surface with visible account depth, repeatable short-video publishing, and a premium automotive content language.</p>
+	            </div>
+	          </div>
+        </article>
+        <article class="web-case">
+          <div class="web-copy">
+            <h3>Ele.me</h3>
+            <div class="project-meta"><span>Role: Platform Distribution Lead</span><span>Client: Ele.me / Alibaba</span><span>Platform content</span></div>
+            <p>Platform-facing brand content system for Ele.me, covering official-channel publishing, campaign releases, social proof, and distribution-ready surfaces.</p>
+            <div class="metric-row"><span>Owned media</span><span>Channel proof</span><span>Campaign distribution</span></div>
+          </div>
+          <div class="web-media-grid proof-thumb-grid">
+            <img class="phone lowres" src="assets/img_065.jpg" alt="Eleme channel proof A">
+            <img class="phone lowres" src="assets/img_066.jpg" alt="Eleme channel proof B">
+            <img class="phone lowres" src="assets/img_067.jpg" alt="Eleme channel proof C">
+            <img class="wide" src="assets/img_068.jpg" alt="Eleme channel proof D">
+            <img class="square contain" src="assets/img_069.jpg" alt="Eleme channel proof E">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="qa" class="section">
+      <div class="case-head">
+        <div class="case-index">QA</div>
+        <div>
+          <p>Working rules for the next pass</p>
+          <h2>Asset Logic Before Visual Polish</h2>
+        </div>
+      </div>
+      <div class="locked-grid">
+        <article class="locked-card">
+          <div>
+            <span class="status-pill">keep</span>
+	            <strong>Style System</strong>
+	            <p>Black pixel personal-site base: click-through category views, compact proof boards, and WeChat/PDF-friendly project density.</p>
+          </div>
+        </article>
+        <article class="locked-card">
+          <div>
+            <span class="status-pill">fix</span>
+            <strong>Content Mapping</strong>
+            <p>Pan and Mark stay finished. Other projects expand only after their image folder, project name, and role logic are explicitly matched.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    (() => {
+      const cv = document.getElementById("cv");
+      if (!cv) return;
+      const cx = cv.getContext("2d");
+      if (!cx) return;
+
+      let w = 0;
+      let h = 0;
+      let t = 0;
+	      const layers = [
+	        { a: 28, f: 0.0017, s: 0.38, y: 0.30, op: 0.10, c: [232, 160, 32] },
+	        { a: 18, f: 0.0024, s: 0.58, y: 0.50, op: 0.08, c: [22, 140, 255] },
+	        { a: 34, f: 0.0013, s: 0.27, y: 0.68, op: 0.07, c: [255, 42, 24] },
+	        { a: 14, f: 0.0031, s: 0.70, y: 0.82, op: 0.05, c: [199, 255, 54] }
+	      ];
+
+      const resize = () => {
+        const ratio = window.devicePixelRatio || 1;
+        w = window.innerWidth;
+        h = window.innerHeight;
+        cv.width = Math.floor(w * ratio);
+        cv.height = Math.floor(h * ratio);
+        cv.style.width = `${w}px`;
+        cv.style.height = `${h}px`;
+        cx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      };
+
+      const draw = () => {
+        cx.clearRect(0, 0, w, h);
+        layers.forEach(({ a, f, s, y, op, c }) => {
+          const cy = h * y;
+          const [r, g, b] = c;
+          cx.beginPath();
+          cx.moveTo(0, h);
+          for (let x = 0; x <= w; x += 4) {
+            const wy = cy + Math.sin(x * f + t * s) * a + Math.sin(x * f * 1.65 + t * s * 0.6 + 1.3) * a * 0.4;
+            cx.lineTo(x, wy);
+          }
+          cx.lineTo(w, h);
+          cx.closePath();
+          const fill = cx.createLinearGradient(0, cy - a * 2.5, 0, cy + a * 2.5);
+          fill.addColorStop(0, `rgba(${r},${g},${b},0)`);
+          fill.addColorStop(0.5, `rgba(${r},${g},${b},${op})`);
+          fill.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          cx.fillStyle = fill;
+          cx.fill();
+        });
+        t += 0.012;
+        window.requestAnimationFrame(draw);
+      };
+
+      resize();
+      window.addEventListener("resize", resize);
+      draw();
+    })();
+
+	    (() => {
+		      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+		      const routes = new Set(["athlete", "locked", "mark", "film", "production", "operations", "qa"]);
+	      const routeAliases = new Map([
+	        ["netease-dunk-city", "production"],
+	        ["abercrombie-hollister", "production"],
+	        ["china-france-production", "production"],
+	        ["i-love-you-china-mv", "production"]
+	      ]);
+	      const navLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
+
+	      const normalizeRoute = (hash) => {
+	        const id = (hash || "").replace("#", "");
+	        if (routes.has(id)) return id;
+	        return routeAliases.get(id) || "home";
+	      };
+
+	      const setView = (hash, push = false) => {
+	        const rawId = (hash || "").replace("#", "");
+	        const view = normalizeRoute(hash);
+	        const activeView = view === "locked" || view === "mark" ? "athlete" : view;
+	        document.body.dataset.view = view;
+	        navLinks.forEach((link) => {
+	          const linkView = normalizeRoute(link.getAttribute("href"));
+	          link.dataset.active = linkView === activeView ? "true" : "false";
+	        });
+	        if (push) {
+	          history.pushState(null, "", view === "home" ? "#top" : `#${rawId || view}`);
+	        }
+		        const jumpToTarget = () => {
+		          const target = routeAliases.has(rawId) ? document.getElementById(rawId) : null;
+		          if (!target) return;
+		          const top = target.getBoundingClientRect().top + window.pageYOffset - 96;
+		          window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+		        };
+		        window.scrollTo({ top: 0, behavior: "auto" });
+		        window.requestAnimationFrame(() => {
+		          window.requestAnimationFrame(() => {
+		            jumpToTarget();
+		            window.setTimeout(jumpToTarget, 250);
+		          });
+		        });
+	      };
+
+	      navLinks.forEach((link) => {
+	        link.addEventListener("click", (event) => {
+	          const hash = link.getAttribute("href");
+	          if (!hash || hash === "#") return;
+	          event.preventDefault();
+	          setView(hash, true);
+	        });
+	      });
+
+	      window.addEventListener("popstate", () => setView(window.location.hash));
+	      window.addEventListener("hashchange", () => setView(window.location.hash));
+	      setView(window.location.hash || "#top");
+	    })();
+  </script>
 </body>
 </html>
