@@ -2828,8 +2828,7 @@
     body[data-view="mark"] #mark,
     body[data-view="film"] #film,
     body[data-view="production"] #production,
-    body[data-view="operations"] #operations,
-    body[data-view="qa"] #qa {
+    body[data-view="operations"] #operations {
       display: flex;
       animation: viewIn 0.34s ease both;
     }
@@ -4197,24 +4196,57 @@
 
     .mark-expansion {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      max-width: 980px;
+      grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+      max-width: 1120px;
       margin: 0 auto;
+      align-items: stretch;
+    }
+
+    .mark-expansion figure {
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.012)),
+        rgba(5, 5, 5, 0.72);
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+      min-width: 0;
     }
 
     .mark-expansion img {
       width: 100%;
-      min-height: 280px;
+      height: 210px;
+      min-height: 0;
       object-fit: contain;
-      border: 1px solid rgba(255, 255, 255, 0.085);
       background: #050505;
-      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+      display: block;
+    }
+
+    .mark-expansion figcaption {
+      color: var(--soft);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .mark-expansion .poster {
+      grid-row: span 2;
+    }
+
+    .mark-expansion .poster img {
+      height: 485px;
+      max-height: 62vh;
     }
 
     .mark-expansion .wide {
       grid-column: span 2;
-      object-fit: contain;
+    }
+
+    .mark-expansion .wide img {
+      height: 250px;
     }
 
     .commercial-grid {
@@ -4462,7 +4494,6 @@
     @media (max-width: 980px) {
       .home-grid,
       .locked-grid,
-      .film-card-grid,
       .web-case,
       .web-case:nth-child(even),
       .chapter-head,
@@ -4739,12 +4770,13 @@
 
       .ip-proof-board .wide-proof,
       .event-proof-grid .wide-proof,
-      .event-board .span-2,
-      .mark-expansion .wide,
-      .account-detail-board img:first-child {
-        grid-column: auto;
-        grid-row: auto;
-      }
+	      .event-board .span-2,
+	      .mark-expansion .wide,
+	      .mark-expansion .poster,
+	      .account-detail-board img:first-child {
+	        grid-column: auto;
+	        grid-row: auto;
+	      }
 
       .porsche-proof-wall {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4821,6 +4853,10 @@
       .home-grid {
         grid-template-columns: 1fr !important;
         justify-items: stretch;
+      }
+
+      .operations-data {
+        grid-template-columns: 1fr !important;
       }
 
       .home-copy,
@@ -4940,7 +4976,7 @@
       }
 
       .operations-data {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       }
 
       .operations-data div,
@@ -4985,6 +5021,182 @@
       .navlinks a {
         width: 100%;
         min-width: 0;
+      }
+    }
+
+    /* Final recruiter-preview QA layer: dense desktop cards, stable proof boards, no accidental tablet chaos. */
+    .story-heading h3 {
+      font-size: clamp(2.25rem, 5.2vw, 5.2rem);
+      line-height: 1;
+    }
+
+    .story-heading p,
+    .web-copy p,
+    .film-card p {
+      max-width: 62ch;
+    }
+
+    .film-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: clamp(12px, 1.8vw, 18px);
+    }
+
+    .film-card {
+      grid-template-columns: minmax(150px, 0.76fr) minmax(0, 1fr) !important;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    .film-card img {
+      height: clamp(210px, 22vw, 300px) !important;
+      min-height: 0 !important;
+      object-fit: cover !important;
+      object-position: center top;
+    }
+
+    .web-case-list {
+      gap: clamp(18px, 3vw, 34px);
+    }
+
+    .web-case,
+    .web-case > * {
+      min-width: 0;
+    }
+
+    .web-media-grid,
+    .media-stack,
+    .pdf-shot,
+    .long-proof-board,
+    .account-detail-board {
+      align-content: start;
+    }
+
+    .mark-expansion {
+      grid-template-columns: minmax(190px, 0.62fr) repeat(2, minmax(0, 1fr)) !important;
+      align-items: stretch;
+      gap: clamp(8px, 1.4vw, 14px);
+    }
+
+    .mark-expansion figure {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .mark-expansion img {
+      height: clamp(170px, 18vw, 236px) !important;
+      object-fit: contain !important;
+    }
+
+    .mark-expansion .poster img {
+      height: clamp(360px, 43vw, 500px) !important;
+      max-height: none;
+    }
+
+    .mark-expansion .wide img {
+      height: clamp(185px, 21vw, 265px) !important;
+    }
+
+    .mark-proof-caption {
+      max-width: 76ch;
+    }
+
+    #porsche-owned-media .porsche-proof-wall {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 10px;
+    }
+
+    #porsche-owned-media .porsche-proof-wall .account-shot {
+      grid-column: span 2 !important;
+      height: 260px;
+    }
+
+    #porsche-owned-media .porsche-proof-wall .phone {
+      grid-column: span 1 !important;
+      height: 260px;
+    }
+
+    #porsche-owned-media .porsche-proof-wall .brand-shot {
+      grid-column: span 1 !important;
+      height: 150px;
+    }
+
+    #porsche-owned-media .porsche-proof-wall .proof-brief {
+      grid-column: span 3 !important;
+      min-height: 150px;
+    }
+
+    #porsche-owned-media .porsche-proof-wall figcaption {
+      max-width: calc(100% - 12px);
+      min-height: 0;
+      padding: 4px 6px;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    @media (min-width: 841px) {
+      .web-case,
+      .web-case:nth-child(even) {
+        grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr) !important;
+      }
+
+      .web-case:nth-child(even) .web-copy {
+        order: 2;
+      }
+
+      .web-case:nth-child(even) > :not(.web-copy) {
+        order: 1;
+      }
+
+      .operations-data {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      #porsche-owned-media {
+        grid-template-columns: minmax(390px, 1fr) minmax(330px, 0.9fr) !important;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .web-case,
+      .web-case:nth-child(even),
+      .film-card,
+      .film-card-grid,
+      .mark-expansion {
+        grid-template-columns: 1fr !important;
+      }
+
+      .web-case:nth-child(even) .web-copy,
+      .web-case:nth-child(even) > :not(.web-copy) {
+        order: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .operations-data,
+      .hero-stats {
+        grid-template-columns: 1fr !important;
+      }
+
+      .mark-expansion .wide,
+      .mark-expansion .poster {
+        grid-column: auto !important;
+        grid-row: auto !important;
+      }
+
+      .mark-expansion .poster img,
+      .mark-expansion img,
+      .film-card img {
+        height: auto !important;
+        max-height: 440px;
+      }
+
+      #porsche-owned-media .porsche-proof-wall,
+      #porsche-owned-media .porsche-proof-wall .account-shot,
+      #porsche-owned-media .porsche-proof-wall .phone,
+      #porsche-owned-media .porsche-proof-wall .brand-shot,
+      #porsche-owned-media .porsche-proof-wall .proof-brief {
+        grid-column: auto !important;
       }
     }
   </style>
@@ -5035,7 +5247,7 @@
         <a class="category-card" href="#film">
           <small>02 / Theatrical</small>
           <strong>Theatrical Release Campaigns</strong>
-	          <span>Campaign proof</span>
+	          <span>China release campaigns</span>
         </a>
         <a class="category-card" href="#production">
           <small>03 / Production</small>
@@ -5043,9 +5255,9 @@
           <span>Shoots / launch films</span>
         </a>
         <a class="category-card" href="#operations">
-          <small>04 / Owned Media</small>
-          <strong>Owned Media & Distribution Systems</strong>
-          <span>Platform surfaces</span>
+          <small>04 / Distribution</small>
+          <strong>Entertainment & Brand Distribution Systems</strong>
+          <span>Channel systems</span>
         </a>
       </div>
     </section>
@@ -5505,12 +5717,24 @@
 	              </article>
 	            </div>
 	            <div class="mark-expansion">
-	              <img src="assets/img_027.jpg" alt="Mark Williams Kuaishou proof">
-	              <img src="assets/img_028.jpg" alt="Mark Williams Zhangyu proof">
-	              <img class="wide" src="assets/img_029.jpg" alt="Mark Williams campaign banner">
-	              <img class="wide" src="assets/img_030.jpg" alt="Mark Williams event proof">
+	              <figure class="poster">
+	                <img src="assets/img_027.jpg" alt="Mark Williams Kuaishou launch proof">
+	                <figcaption>Kuaishou sports-channel launch proof</figcaption>
+	              </figure>
+	              <figure>
+	                <img src="assets/img_028.jpg" alt="Mark Williams Zhangyu account proof">
+	                <figcaption>Cue-brand account surface and product entry</figcaption>
+	              </figure>
+	              <figure>
+	                <img src="assets/img_029.jpg" alt="Mark Williams campaign banner">
+	                <figcaption>Product-facing campaign banner</figcaption>
+	              </figure>
+	              <figure class="wide">
+	                <img src="assets/img_030.jpg" alt="Mark Williams offline event proof">
+	                <figcaption>Offline event proof connecting the IP to tournament-side visibility</figcaption>
+	              </figure>
 	            </div>
-	            <p class="mark-proof-caption">The proof here is deliberately mixed: owned account surfaces, product launch assets, cue-brand campaign visuals, and offline event proof together show how the IP moved from content into commercial infrastructure.</p>
+	            <p class="mark-proof-caption">Together, these assets show the expansion path from platform launch to product-facing campaign, event visibility, and cue-brand commercial infrastructure.</p>
 	          </section>
 
 	          <section class="story-block">
@@ -5523,7 +5747,7 @@
 	              <div>
 	                <small>Brand Partnership / Ambassador & Product System</small>
 	                <strong>From Champion IP to Cue-Brand Value</strong>
-	                <p>The Zhangyu work connected Mark's authority to a concrete commercial product system: ambassador launch, product-facing content, event-side exposure, roster-building language, and sales-channel credibility. This is the commercial conversion layer of the Mark case, not just another content proof.</p>
+	                <p>The Zhangyu work connected Mark's authority to a concrete commercial product system: ambassador launch, product-facing content, event-side exposure, roster-building language, and sales-channel credibility.</p>
 	              </div>
 	              <div class="zhangyu-proof-grid">
 	                <img src="assets/zhangyu_signing_ceremony.jpg" alt="Zhangyu Cue signing ceremony with Mark Williams">
@@ -5558,7 +5782,7 @@
       <div class="case-head">
         <div class="case-index">02</div>
         <div>
-          <p>Theatrical marketing / parallel proof cards</p>
+          <p>Theatrical marketing / China release campaigns</p>
           <h2>Theatrical Release Campaigns</h2>
         </div>
       </div>
@@ -5718,7 +5942,7 @@
           <div class="web-copy">
             <h3>I Love You, China MV</h3>
             <div class="project-meta"><span>Role: Producer / Executive Producer</span><span>Client: People's Daily</span><span>Year: 2017</span></div>
-            <p>National Day music video commissioned by People's Daily, featuring TFBOYS and Tia Ray. Use a small still set plus the official link: the page needs visual proof, while the link remains the verification path.</p>
+            <p>National Day music video commissioned by People's Daily, featuring TFBOYS and Tia Ray. I supported production coordination and delivery for a state-media music-video project built around patriotic city imagery and major-pop-artist participation.</p>
             <div class="metric-row"><span>National Day MV</span><span>TFBOYS</span><span>Tia Ray</span></div>
             <div class="project-links">
               <a href="https://www.xinpianchang.com/a90287?from=webShare&amp;channel=copyLink" target="_blank" rel="noopener">Watch on Xinpianchang</a>
@@ -5737,8 +5961,8 @@
       <div class="case-head">
         <div class="case-index">04</div>
         <div>
-          <p>Platform distribution / owned media / brand content systems</p>
-          <h2>Owned Media & Distribution Systems</h2>
+          <p>Official channels / entertainment distribution / commerce conversion</p>
+          <h2>Entertainment & Brand Distribution Systems</h2>
         </div>
       </div>
 	      <div class="web-case-list">
@@ -5759,13 +5983,13 @@
 		          <div class="pdf-shot oriental-proof">
 		            <img src="assets/img_063.jpg" alt="Oriental Shopping English case proof page 1">
 		            <img src="assets/img_064.jpg" alt="Oriental Shopping English case proof page 2">
-		            <a class="file-link" href="assets/doc_001.pdf" target="_blank" rel="noopener">Open original source PDF</a>
+		            <a class="file-link" href="assets/doc_001.pdf" target="_blank" rel="noopener">Open original PDF</a>
 		          </div>
         </article>
-        <article class="web-case">
+        <article class="web-case" id="porsche-owned-media">
 	          <div class="web-copy">
 	            <h3>Porsche</h3>
-	            <div class="project-meta"><span>Role: Owned Media Strategy + Production Director</span><span>Client: Porsche China</span><span>2020-2021</span></div>
+	            <div class="project-meta"><span>Role: Channel Strategy + Production Director</span><span>Client: Porsche China</span><span>2020-2021</span></div>
 	            <p>Built Porsche China's official Douyin channel as a premium short-video distribution surface, balancing audience growth with luxury brand equity.</p>
 	            <div class="metric-row"><span>300K+ followers gained</span><span>50+ videos produced</span><span>30M+ peak single video</span><span>240K+ likes on peak video</span></div>
 	            <div class="operations-data">
@@ -5803,7 +6027,7 @@
 	            </figure>
 	            <div class="proof-brief">
 	              <strong>Brand Channel Proof</strong>
-	              <p><span>What this shows:</span> an official luxury-brand Douyin surface with visible account depth, repeatable short-video publishing, and a premium automotive content language.</p>
+	              <p><span>Signal:</span> an official luxury-brand Douyin surface with visible account depth, repeatable short-video publishing, and a premium automotive content language.</p>
 	            </div>
 	          </div>
         </article>
@@ -5826,32 +6050,6 @@
             <img class="phone lowres" src="assets/img_072.jpg" alt="Eleme channel proof C">
             <img class="wide" src="assets/img_073.jpg" alt="Eleme channel proof D">
             <img class="square contain" src="assets/img_074.jpg" alt="Eleme channel proof E">
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="qa" class="section">
-      <div class="case-head">
-        <div class="case-index">QA</div>
-        <div>
-          <p>Working rules for the next pass</p>
-          <h2>Asset Logic Before Visual Polish</h2>
-        </div>
-      </div>
-      <div class="locked-grid">
-        <article class="locked-card">
-          <div>
-            <span class="status-pill">keep</span>
-	            <strong>Style System</strong>
-	            <p>Black pixel personal-site base: click-through category views, compact proof boards, and WeChat/PDF-friendly project density.</p>
-          </div>
-        </article>
-        <article class="locked-card">
-          <div>
-            <span class="status-pill">fix</span>
-            <strong>Content Mapping</strong>
-            <p>Pan and Mark stay finished. Other projects expand only after their image folder, project name, and role logic are explicitly matched.</p>
           </div>
         </article>
       </div>
@@ -5917,7 +6115,7 @@
 
 	    (() => {
 		      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-		      const routes = new Set(["athlete", "locked", "mark", "film", "production", "operations", "qa"]);
+		      const routes = new Set(["athlete", "locked", "mark", "film", "production", "operations"]);
 	      const routeAliases = new Map([
 	        ["netease-dunk-city", "production"],
 	        ["abercrombie-hollister", "production"],
