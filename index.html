@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CJ Yan - Pixel Portfolio Preview</title>
+  <title>CJ Yan - Entertainment & Sports IP Strategist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -2877,6 +2877,14 @@
       max-width: 540px;
     }
 
+    .system-line span {
+      display: block;
+    }
+
+    .system-line span + span {
+      margin-top: 0.22em;
+    }
+
     .home .identity-tags {
       display: none;
     }
@@ -3106,22 +3114,9 @@
       background: rgba(232, 160, 32, 0.06);
     }
 
-    .athlete-choice-card .choice-portrait {
-      position: absolute;
-      z-index: 1;
-      top: clamp(18px, 2.4vw, 26px);
-      right: clamp(18px, 2.4vw, 26px);
-      width: clamp(96px, 12vw, 152px);
-      aspect-ratio: 3 / 4;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
-      opacity: 1;
-      filter: none;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.72);
-      background: #050505;
-    }
+	    .athlete-choice-card .choice-portrait {
+	      display: none;
+	    }
 
     .athlete-logic-strip {
       display: grid;
@@ -3238,23 +3233,26 @@
       gap: 16px;
     }
 
-    .film-card {
-      display: grid;
-      grid-template-columns: minmax(170px, 0.78fr) minmax(0, 1.22fr);
-      gap: 16px;
-      padding: 14px;
-      align-items: stretch;
+	    .film-card {
+	      display: grid;
+	      grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+	      gap: 16px;
+	      padding: 14px;
+	      align-items: stretch;
     }
 
-    .film-card img {
-      width: 100%;
-      height: 100%;
-      min-height: 230px;
-      max-height: 360px;
-      object-fit: cover;
-      border-radius: 0;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-    }
+	    .film-card img {
+	      width: 100%;
+	      height: 100%;
+	      min-height: 290px;
+	      max-height: 420px;
+	      object-fit: cover;
+	      object-position: top center;
+	      padding: 0;
+	      background: #050505;
+	      border-radius: 0;
+	      border: 1px solid rgba(255, 255, 255, 0.14);
+	    }
 
     .film-card h3 {
       color: var(--ink);
@@ -3614,16 +3612,16 @@
       text-transform: uppercase;
     }
 
-    .proof-brief p {
-      margin: 0;
-      color: #aaa39b;
-      font-size: 12px;
-      line-height: 1.55;
-    }
+	    .proof-brief p {
+	      margin: 0;
+	      color: #f7f4ed;
+	      font-size: 12px;
+	      line-height: 1.55;
+	    }
 
-    .proof-brief span {
-      color: var(--paper);
-    }
+	    .proof-brief span {
+	      color: #fff;
+	    }
 
     .porsche-proof-wall img {
       width: 100%;
@@ -3935,6 +3933,15 @@
       order: 2;
     }
 
+    .creator-panel.compact-proof {
+      grid-template-columns: minmax(320px, 1fr) minmax(220px, 0.62fr);
+    }
+
+    .creator-panel.compact-proof img {
+      max-height: 270px;
+      justify-self: center;
+    }
+
     .event-board {
       display: flex;
       flex-wrap: wrap;
@@ -3963,6 +3970,166 @@
       flex: 2 1 510px;
       aspect-ratio: 16 / 7;
       object-fit: contain;
+    }
+
+    .series-proof {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+      gap: clamp(16px, 3vw, 32px);
+      align-items: center;
+      max-width: 1120px;
+      margin: 18px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid rgba(247, 244, 237, 0.07);
+    }
+
+    .series-proof-media {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(150px, 0.85fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .series-proof-media img,
+    .event-zone figure,
+    .proof-rail figure,
+    .commercial-feature img {
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      background: #050505;
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    .series-proof-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      max-height: 360px;
+      object-fit: contain;
+    }
+
+    .series-hot-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .event-summary-grid {
+      width: min(1120px, 100%);
+      margin: 18px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .event-summary-card {
+      padding: 16px;
+      border: 1px solid rgba(247, 244, 237, 0.075);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012)),
+        rgba(8, 8, 10, 0.26);
+      backdrop-filter: blur(14px);
+    }
+
+    .event-summary-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: clamp(1rem, 1.7vw, 1.45rem);
+      margin-bottom: 10px;
+    }
+
+    .event-summary-card span {
+      display: block;
+      color: var(--accent);
+      line-height: 1.45;
+    }
+
+    .event-zone {
+      width: min(1120px, 100%);
+      margin: 22px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .event-zone figure,
+    .proof-rail figure {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .event-zone img {
+      width: 100%;
+      height: 285px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      background: #050505;
+    }
+
+    .event-zone figcaption,
+    .proof-rail figcaption {
+      padding: 10px;
+      color: var(--ink);
+      font-size: 0.72rem;
+      line-height: 1.35;
+      background: rgba(8, 8, 10, 0.78);
+    }
+
+    .platform-proof {
+      width: min(1120px, 100%);
+      margin: 24px auto 0;
+    }
+
+    .platform-proof h4 {
+      color: var(--ink);
+      font-size: clamp(1.3rem, 2.6vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .platform-proof p {
+      color: var(--soft);
+      line-height: 1.55;
+      max-width: 760px;
+      margin: 0 0 14px;
+    }
+
+    .proof-rail {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 14px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-color: rgba(232, 160, 32, 0.75) rgba(247, 244, 237, 0.08);
+      scrollbar-width: thin;
+    }
+
+    .proof-rail::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .proof-rail::-webkit-scrollbar-track {
+      background: rgba(247, 244, 237, 0.08);
+    }
+
+    .proof-rail::-webkit-scrollbar-thumb {
+      background: rgba(232, 160, 32, 0.75);
+      border: 1px solid rgba(0, 0, 0, 0.45);
+    }
+
+    .proof-rail figure {
+      flex: 0 0 min(420px, 82vw);
+      scroll-snap-align: start;
+    }
+
+    .proof-rail figure.wide {
+      flex-basis: min(620px, 88vw);
+    }
+
+    .proof-rail img {
+      width: 100%;
+      height: 330px;
+      object-fit: contain;
+      display: block;
     }
 
     .case-divider {
@@ -4013,7 +4180,7 @@
 
     .mark-original-grid {
       max-width: 1120px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .mark-original-grid .series-card img {
@@ -4096,6 +4263,10 @@
       width: min(1120px, 100%);
       margin: 14px auto 0;
       padding: clamp(20px, 3vw, 34px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
+      gap: clamp(16px, 3vw, 32px);
+      align-items: center;
       border: 1px solid rgba(232, 160, 32, 0.34);
       background:
         linear-gradient(135deg, rgba(232, 160, 32, 0.13), rgba(255, 255, 255, 0.018)),
@@ -4120,14 +4291,164 @@
       margin-bottom: 14px;
     }
 
-    .commercial-feature p {
-      max-width: 820px;
+	    .commercial-feature p {
+	      max-width: 820px;
+	      margin: 0;
+	      color: var(--soft);
+	      line-height: 1.65;
+	    }
+
+    .commercial-feature img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      display: block;
+    }
+
+	    .hot,
+	    .feature-copy li strong,
+	    .series-card span strong {
+	      color: var(--red);
+	      text-shadow: 0 0 22px rgba(255, 42, 24, 0.24);
+	    }
+
+	    .neutral-stat {
+	      color: var(--ink) !important;
+	      text-shadow: none !important;
+	    }
+
+	    .hero-stats strong .hot,
+	    .hero-stats strong .neutral-stat {
+	      font-size: inherit;
+	      line-height: inherit;
+	    }
+
+	    .hero-stats strong .hot {
+	      color: var(--red);
+	    }
+
+	    .hero-stats strong.hot {
+	      color: var(--red);
+	      text-shadow: 0 0 26px rgba(255, 42, 24, 0.3);
+	    }
+
+	    .athlete-hero img.pan-hero-image {
+	      width: min(540px, 78vw);
+	      max-height: 360px;
+	    }
+
+    .athlete-hero .mark-hero-image {
+      width: min(540px, 78vw);
+      max-height: 620px;
+      aspect-ratio: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .athlete-hero .mark-trophy-image {
+      width: min(760px, 92vw);
+      max-height: 520px;
+      aspect-ratio: 3 / 2;
+      object-fit: contain;
+    }
+
+    .mark-pillar-grid {
+      margin-top: 24px;
+    }
+
+    .mark-pillar-grid .commercial-tile {
+      min-height: 210px;
+    }
+
+    .mark-proof-caption {
+      width: min(980px, 100%);
+      margin: 18px auto 0;
+      color: var(--soft);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .zhangyu-proof-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .zhangyu-proof-grid img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      min-height: 0;
+      object-fit: contain;
+      background: #050505;
+    }
+
+    .zhangyu-proof-grid img:first-child {
+      grid-row: span 2;
+    }
+
+    .mark-difference {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mark-difference article {
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid rgba(247, 244, 237, 0.075);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.014)),
+        rgba(8, 8, 10, 0.24);
+      backdrop-filter: blur(16px);
+    }
+
+    .mark-difference strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .mark-difference p {
       margin: 0;
       color: var(--soft);
       line-height: 1.65;
     }
 
-    @keyframes viewIn {
+	    .compact-stats {
+	      max-width: 1040px;
+	      margin-left: auto;
+	      margin-right: auto;
+	    }
+
+	    .pdf-shot.oriental-proof {
+	      display: grid;
+	      grid-template-columns: 1fr;
+	      gap: 14px;
+	    }
+
+	    .pdf-shot.oriental-proof img {
+	      width: 100%;
+	      height: auto;
+	      object-fit: contain;
+	      background: #fff;
+	    }
+
+	    .porsche-proof-wall figcaption {
+	      color: #f7f4ed;
+	      background: rgba(0, 0, 0, 0.86);
+	      text-shadow: 0 1px 0 #000;
+	    }
+
+	    .proof-brief {
+	      background:
+	        linear-gradient(135deg, rgba(232, 160, 32, 0.18), transparent 46%),
+	        rgba(5, 5, 7, 0.76);
+	    }
+
+	    @keyframes viewIn {
       from {
         opacity: 0;
         transform: translateY(18px);
@@ -4166,9 +4487,22 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .series-proof,
+      .commercial-feature,
+      .zhangyu-proof-grid,
+      .mark-difference {
+        grid-template-columns: 1fr;
+      }
+
+      .event-summary-grid,
+      .event-zone {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .story-feature,
       .story-feature.reverse,
       .creator-panel,
+      .creator-panel.compact-proof,
       .creator-panel:nth-child(even) {
         grid-template-columns: 1fr;
       }
@@ -4267,7 +4601,7 @@
 
       .case-head h2 {
         max-width: 100%;
-        font-size: clamp(28px, 9vw, 38px);
+        font-size: clamp(24px, 7.8vw, 32px);
         line-height: 1.08;
         overflow-wrap: anywhere;
       }
@@ -4320,6 +4654,26 @@
       .phone-pair,
       .commercial-grid {
         grid-template-columns: 1fr;
+      }
+
+      .series-proof,
+      .series-proof-media,
+      .commercial-feature,
+      .zhangyu-proof-grid,
+      .mark-difference,
+      .event-summary-grid,
+      .event-zone {
+        grid-template-columns: 1fr;
+      }
+
+      .zhangyu-proof-grid img:first-child {
+        grid-row: auto;
+      }
+
+      .event-zone img {
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-fit: contain;
       }
 
       .hero-stats {
@@ -4430,6 +4784,209 @@
         height: 100%;
       }
     }
+
+    @media (max-width: 640px) {
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .topbar {
+        overflow: hidden;
+      }
+
+      .nav {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 10px;
+        gap: 10px;
+        overflow: hidden;
+      }
+
+      .navlinks {
+        flex: 1 1 auto;
+        max-width: calc(100vw - 124px);
+        overflow-x: auto;
+      }
+
+      .section {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .home-grid {
+        grid-template-columns: 1fr !important;
+        justify-items: stretch;
+      }
+
+      .home-copy,
+      .system-line,
+      .case-head,
+      .web-case,
+      .film-card,
+      .locked-card,
+      .asset-rule,
+      .pdf-shot,
+      .oriental-proof,
+      .porsche-proof-wall,
+      .proof-thumb-grid,
+      .project-meta,
+      .metric-row,
+      .project-links {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .system-line {
+        font-size: 15px;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+      }
+
+      .home .portrait-panel {
+        justify-self: center;
+        width: min(290px, 100%);
+        max-width: 100%;
+      }
+
+      .home .portrait-panel img {
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+      }
+
+      .case-head p,
+      .case-head h2,
+      .web-copy h3,
+      .film-card h3,
+      .locked-card strong,
+      .web-copy p,
+      .film-card p,
+      .feature-copy p,
+      .feature-copy li {
+        overflow-wrap: anywhere;
+      }
+
+      .web-case,
+      .film-card,
+      .locked-card,
+      .asset-rule,
+      .pdf-shot,
+      .porsche-proof-wall {
+        overflow: hidden;
+      }
+
+      .pdf-shot img,
+      .pdf-shot.oriental-proof img,
+      .proof-thumb-grid img {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .project-meta,
+      .metric-row,
+      .project-links {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 980px) {
+      html,
+      body,
+      .topbar,
+      .page,
+      .section,
+      .home-grid,
+      .web-case-list,
+      .web-case,
+      .web-copy,
+      .web-media-grid,
+      .media-stack,
+      .pdf-shot,
+      .oriental-proof,
+      .long-proof-board,
+      .porsche-proof-wall,
+      .proof-thumb-grid {
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+      }
+
+      .nav {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: hidden;
+      }
+
+      .navlinks {
+        min-width: 0;
+        overflow-x: auto;
+      }
+
+      .case-head p,
+      .case-head h2,
+      .system-line,
+      .web-copy h3,
+      .web-copy p {
+        overflow-wrap: anywhere;
+      }
+
+      .operations-data {
+        grid-template-columns: 1fr !important;
+      }
+
+      .operations-data div,
+      .operations-data div:last-child:nth-child(odd) {
+        grid-column: auto !important;
+      }
+
+      .pdf-shot img,
+      .pdf-shot.oriental-proof img,
+      .long-proof-board img,
+      .porsche-proof-wall img,
+      .proof-thumb-grid img {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        width: 100%;
+        padding-top: 4px;
+        line-height: 1.1;
+      }
+
+      .navlinks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+      }
+
+      .navlinks a {
+        width: 100%;
+        min-width: 0;
+      }
+    }
   </style>
 </head>
 <body data-view="home">
@@ -4440,7 +4997,7 @@
 	      <a class="brand" href="#top">CJ Yan <span>Visual Work System</span></a>
 	      <div class="navlinks">
 	        <a href="#top">Home</a>
-	        <a href="#athlete">Talent IP</a>
+	        <a href="#athlete">Athlete IP</a>
 	        <a href="#film">Theatrical</a>
 	        <a href="#production">Production</a>
 	        <a href="#operations">Distribution</a>
@@ -4455,23 +5012,23 @@
         <div class="home-copy">
           <p class="eyebrow">CJYAN.ME / VISUAL WORK SYSTEM</p>
           <h1 class="intro-title">HI, I'M<br>CJ YAN <span class="accent">;)</span></h1>
-          <p class="system-line">Producer and IP builder across China-U.S. sports, entertainment, brands, and platform systems.</p>
+          <p class="system-line"><span>Entertainment & Sports IP Strategist</span><span>Producer | International Marketing</span></p>
           <div class="identity-tags" aria-label="Portfolio keywords">
+            <span>Entertainment IP</span>
+            <span>Sports IP</span>
             <span>Producer</span>
-            <span>IP Builder</span>
-            <span>Campaign Lead</span>
-            <span>China / U.S.</span>
+            <span>International Marketing</span>
           </div>
         </div>
-        <figure class="portrait-panel">
-          <img src="assets/img_001.jpg" alt="CJ Yan side-profile portrait">
-          <figcaption><span>Portfolio entrance</span><span>Wechat-ready HTML first</span></figcaption>
-        </figure>
+	        <figure class="portrait-panel">
+	          <img src="assets/img_001.jpg" alt="CJ Yan side-profile portrait">
+	          <figcaption><span>IP Strategist / Producer</span><span>International Marketing</span></figcaption>
+	        </figure>
       </div>
 
 	      <div class="category-grid" aria-label="Portfolio categories">
 	        <a class="category-card" href="#athlete">
-	          <small>01 / Talent IP</small>
+	          <small>01 / Athlete IP</small>
 	          <strong>Athlete IP Development</strong>
 	          <span>Pan / Mark</span>
         </a>
@@ -4503,8 +5060,7 @@
 	      </div>
 	      <div class="athlete-choice-grid" aria-label="Athlete IP case choices">
 	        <a class="athlete-choice-card" href="#locked">
-	          <img class="choice-bg" src="assets/img_002.jpg" alt="Pan Xiaoting athlete IP case">
-	          <img class="choice-portrait" src="assets/img_003.jpg" alt="Pan Xiaoting portrait">
+		          <img class="choice-bg" src="assets/img_002.jpg" alt="Pan Xiaoting athlete IP case">
 	          <div class="athlete-choice-copy">
 	            <small>01A / Domestic Legend</small>
 	            <strong>Pan Xiaoting</strong>
@@ -4514,7 +5070,7 @@
 	          </div>
 	        </a>
 	        <a class="athlete-choice-card" href="#mark">
-	          <img class="choice-bg" src="assets/img_004.jpg" alt="Mark Williams athlete IP case">
+		          <img class="choice-bg" src="assets/mark_trophy_wide.jpg" alt="Mark Williams athlete IP case">
 	          <div class="athlete-choice-copy">
 	            <small>01B / Global Champion</small>
 	            <strong>Mark Williams</strong>
@@ -4547,15 +5103,15 @@
 	      <div class="athlete-flow">
 	        <article class="athlete-case">
 	          <div class="athlete-hero">
-	            <img src="assets/img_002.jpg" alt="Pan Xiaoting billiards portrait">
+		            <img class="pan-hero-image" src="assets/img_002.jpg" alt="Pan Xiaoting billiards portrait">
 	            <h3>PAN XIAOTING</h3>
-	            <p class="subtitle">10-time world champion · Long-standing WPBA player · China's "Queen of 9-Ball"</p>
+            <p class="subtitle">10-time world champion · Long-standing WPBA player · China's "Queen of 9-Ball" · One of China's most iconic billiards players, with both competitive legacy and mainstream cultural recognition.</p>
 	            <p class="body">I led the digital and commercial build-out for Pan Xiaoting, turning a legendary billiards champion into a platform-native sports IP with original formats, vertical-matched creator partnerships, live event programming, brand endorsements, commerce, and owned-audience products.</p>
 	            <div class="hero-stats">
-	              <div><strong>3M -> 15M+</strong><span>Douyin followers</span></div>
-	              <div><strong>30M+</strong><span>cross-platform followers</span></div>
-	              <div><strong>4.4B+</strong><span>topic-volume ecosystem</span></div>
-	              <div><strong>720M+</strong><span>20-episode original series views</span></div>
+		              <div><strong class="neutral-stat">3M -> 15M+</strong><span>Douyin followers</span></div>
+		              <div><strong class="hot">30M+</strong><span>cross-platform followers</span></div>
+		              <div><strong class="hot">4.4B+</strong><span>topic-volume ecosystem</span></div>
+		              <div><strong class="neutral-stat">720M+</strong><span>20-episode original series views</span></div>
 	            </div>
 	          </div>
 
@@ -4577,14 +5133,36 @@
 	                </ul>
 	              </div>
 	              <div class="feature-media phone-pair">
-	                <img src="assets/img_005.jpg" alt="Challenge Pan phone video A">
-	                <img src="assets/img_006.jpg" alt="Challenge Pan phone video B">
+	                <img src="assets/img_004.jpg" alt="Challenge Pan phone video A">
+	                <img src="assets/img_005.jpg" alt="Challenge Pan phone video B">
 	              </div>
 	            </div>
-	            <div class="media-board wide-board" style="margin-top:18px">
-	              <img src="assets/img_007.jpg" alt="Challenge Pan series proof board">
-	            </div>
-	          </section>
+		            <div class="series-proof">
+		              <div class="series-proof-media">
+		                <img src="assets/pan_original_series_profile.jpg" alt="Pan Xiaoting 20-episode original series proof">
+		                <div class="series-hot-stack">
+		                  <img src="assets/pan_original_hot_topic_01.jpg" alt="Challenge Pan Douyin hot topic proof">
+		                  <img src="assets/pan_original_hot_rank_2021.jpg" alt="Challenge Pan Douyin hot ranking proof">
+		                </div>
+		              </div>
+		              <div class="feature-copy">
+		                <h4>20-episode original series</h4>
+		                <p>A repeatable serialized format built around Pan's sports authority, city-level challenges, and comedic audience entry points. The series made the athlete IP feel active, native to short video, and easy for platforms to keep recommending.</p>
+		                <ul>
+		                  <li><strong>720M+</strong> views on Douyin</li>
+		                  <li>Series likes: <strong>13M+</strong></li>
+		                  <li>Series comments: <strong>500K+</strong></li>
+		                  <li>Exposure cycle: <strong>1+ year</strong></li>
+		                </ul>
+		              </div>
+		            </div>
+		            <div class="hero-stats compact-stats">
+		              <div><strong class="hot">1.05B+</strong><span>#ChallengePan topic plays</span></div>
+		              <div><strong class="hot">760M+</strong><span>#PanCuresArrogance topic plays</span></div>
+		              <div><strong class="neutral-stat">#1</strong><span>Douyin hot-topic peak</span></div>
+		              <div><strong class="neutral-stat">720M+</strong><span>20-episode series views</span></div>
+		            </div>
+		          </section>
 
 	          <section class="story-block">
 	            <div class="story-heading">
@@ -4595,15 +5173,15 @@
 	            <div class="creator-system">
 	              <article class="creator-panel">
 	                <div class="feature-copy">
-	                  <h4>Pan x Du Jiao Show</h4>
-	                  <p>A top entertainment and overseas-Chinese culture crossover. The goal was to pull billiards out of pure skill teaching and make Pan feel conversational, humorous, and recognizable to a younger lifestyle audience.</p>
+		                  <h4>Pan x Mr. Unicorn<br>Dujiao Show</h4>
+		                  <p>An entertainment and cross-cultural creator collaboration built to move Pan beyond pure skills content. The work made her feel conversational, humorous, and accessible to a younger lifestyle audience while keeping her champion credibility intact.</p>
 	                  <ul>
 	                    <li>Reached hot-topic #1 for 2 days</li>
 	                    <li><strong>72.15M+</strong> views</li>
 	                    <li>5 videos · 210K+ likes · 30K+ comments</li>
 	                  </ul>
 	                </div>
-	                <img src="assets/img_008.jpg" alt="Pan x Du Jiao Show proof">
+	                <img src="assets/img_007.jpg" alt="Pan x Du Jiao Show proof">
 	              </article>
 	              <article class="creator-panel">
 	                <div class="feature-copy">
@@ -4615,7 +5193,7 @@
 	                    <li><strong>50M+</strong> heat · 1.1M+ likes · 18K+ comments</li>
 	                  </ul>
 	                </div>
-	                <img src="assets/img_009.jpg" alt="Pan x Senior Xiaogang proof">
+	                <img src="assets/img_008.jpg" alt="Pan x Senior Xiaogang proof">
 	              </article>
 	              <article class="creator-panel">
 	                <div class="feature-copy">
@@ -4627,7 +5205,7 @@
 	                    <li>4M+ Bilibili views</li>
 	                  </ul>
 	                </div>
-	                <img src="assets/img_010.jpg" alt="Pan x Da Sima proof">
+	                <img src="assets/img_009.jpg" alt="Pan x Da Sima proof">
 	              </article>
 	              <article class="creator-panel">
 	                <div class="feature-copy">
@@ -4639,10 +5217,22 @@
 	                    <li><strong>8.73M+</strong> Bilibili views · 110K+ coins</li>
 	                  </ul>
 	                </div>
-	                <img src="assets/img_011.jpg" alt="Pan x MediaStorm proof">
-	              </article>
-	            </div>
-	          </section>
+		                <img src="assets/img_010.jpg" alt="Pan x MediaStorm proof">
+		              </article>
+		              <article class="creator-panel compact-proof">
+		                <div class="feature-copy">
+		                  <h4>Pan x Crazy Little Brother Yang</h4>
+		                  <p>A commerce crossover that converted Pan's athlete attention into livestream brand value instead of leaving the collaboration as a one-off viral moment.</p>
+		                  <ul>
+		                    <li><strong>200M+</strong> short-form video views</li>
+		                    <li><strong>6.44M+</strong> video likes</li>
+		                    <li><strong>No.1</strong> Douyin hot search after 10 hours</li>
+		                  </ul>
+		                </div>
+		                <img src="assets/img_011.jpg" alt="Pan x Crazy Little Brother Yang commerce proof">
+		              </article>
+		            </div>
+		          </section>
 
 	          <section class="story-block">
 	            <div class="story-heading">
@@ -4692,10 +5282,80 @@
 	              <div><strong>7.54M+</strong><span>Douyin impressions</span></div>
 	              <div><strong>207K</strong><span>CBSA WeChat total views</span></div>
 	            </div>
-	            <div class="event-board">
-	              <img src="assets/img_020.jpg" alt="Meet the Masters vertical poster">
-	              <img class="span-2" src="assets/img_021.jpg" alt="Meet the Masters group photo">
-	              <img class="span-2" src="assets/img_022.jpg" alt="Meet the Masters platform promotion proof">
+	            <div class="event-summary-grid">
+	              <div class="event-summary-card">
+	                <strong>Douyin</strong>
+	                <span>57K+ peak concurrent</span>
+	                <span>3.018M unique viewers</span>
+	                <span>7.54M impressions</span>
+	                <span>1.168M likes</span>
+	              </div>
+	              <div class="event-summary-card">
+	                <strong>Huya</strong>
+	                <span>8.8K+ peak concurrent</span>
+	                <span>182K+ cumulative views</span>
+	                <span>7m06s avg. watch time</span>
+	                <span>Homepage + event-zone support</span>
+	              </div>
+	              <div class="event-summary-card">
+	                <strong>CBSA WeChat Channels</strong>
+	                <span>165K unique viewers</span>
+	                <span>207K total views</span>
+	                <span>7.8K+ peak concurrent</span>
+	                <span>Official federation channel</span>
+	              </div>
+	            </div>
+	            <div class="event-zone">
+	              <figure>
+	                <img src="assets/meet_masters_interview_lounge.jpg" alt="Meet the Masters interview lounge">
+	                <figcaption>Interview Lounge</figcaption>
+	              </figure>
+	              <figure>
+	                <img src="assets/meet_masters_snooker_zone.jpg" alt="Meet the Masters snooker table zone">
+	                <figcaption>Snooker Table Zone</figcaption>
+	              </figure>
+	              <figure>
+	                <img src="assets/meet_masters_chinese_eight_ball.jpg" alt="Meet the Masters Chinese eight-ball zone">
+	                <figcaption>Chinese Eight-Ball Zone</figcaption>
+	              </figure>
+	              <figure>
+	                <img src="assets/meet_masters_american_pool_zone.jpg" alt="Meet the Masters American pool zone">
+	                <figcaption>American Pool Zone</figcaption>
+	              </figure>
+	            </div>
+	            <div class="platform-proof">
+	              <h4>Platform Distribution & Promotion</h4>
+	              <p>Huya supported the event with official platform resources across app placements, homepage recommendations, event modules, banner visibility, official-account promotion, and social channels.</p>
+	              <div class="proof-rail" aria-label="Meet the Masters platform support proof">
+	                <figure class="wide">
+	                  <img src="assets/meet_masters_platform_composite.jpg" alt="Meet the Masters platform distribution composite">
+	                  <figcaption>Platform support board</figcaption>
+	                </figure>
+	                <figure class="wide">
+	                  <img src="assets/meet_masters_huya_homepage.jpg" alt="Meet the Masters Huya homepage placement">
+	                  <figcaption>Huya homepage placement</figcaption>
+	                </figure>
+	                <figure>
+	                  <img src="assets/meet_masters_app_event_center.jpg" alt="Meet the Masters app event center placement">
+	                  <figcaption>App event center</figcaption>
+	                </figure>
+	                <figure>
+	                  <img src="assets/meet_masters_hot_event_module.jpg" alt="Meet the Masters hot event module">
+	                  <figcaption>Hot event module</figcaption>
+	                </figure>
+	                <figure>
+	                  <img src="assets/meet_masters_official_account_feature.jpg" alt="Meet the Masters official account feature">
+	                  <figcaption>Official account feature</figcaption>
+	                </figure>
+	                <figure>
+	                  <img src="assets/meet_masters_huya_social_post.jpg" alt="Meet the Masters Huya social post">
+	                  <figcaption>Official social post</figcaption>
+	                </figure>
+	                <figure>
+	                  <img src="assets/meet_masters_huya_live_room.jpg" alt="Meet the Masters Huya live room proof">
+	                  <figcaption>Live-room visibility</figcaption>
+	                </figure>
+	              </div>
 	            </div>
 	          </section>
 
@@ -4738,9 +5398,12 @@
 	              </article>
 	            </div>
 	            <article class="commercial-feature">
-	              <small>Final Brand Signal / Fashion Editorial Value</small>
-	              <strong>Harper's BAZAAR / 时尚芭莎</strong>
-	              <p>This is the final commercial-value point: Pan's athlete IP was not only sold through sports, automotive, and livestream commerce. Fashion-editorial recognition such as Harper's BAZAAR helped place her inside a higher-end lifestyle and cultural context, supporting broader brand partnerships beyond billiards.</p>
+	              <div>
+	                <small>Final Brand Signal / Fashion Editorial Value</small>
+	                <strong>Harper's BAZAAR / 时尚芭莎</strong>
+	                <p>This is the final commercial-value point: Pan's athlete IP was not only sold through sports, automotive, and livestream commerce. Fashion-editorial recognition such as Harper's BAZAAR helped place her inside a higher-end lifestyle and cultural context, supporting broader brand partnerships beyond billiards.</p>
+	              </div>
+	              <img src="assets/img_006.jpg" alt="Pan Xiaoting Harper's BAZAAR fashion editorial proof">
 	            </article>
 	          </section>
 	        </article>
@@ -4759,23 +5422,23 @@
 
 	        <article class="athlete-case">
 	          <div class="athlete-hero">
-	            <img class="mark-hero-image" src="assets/img_004.jpg" alt="Mark Williams trophy portrait">
-	            <h3>MARK WILLIAMS</h3>
-	            <p class="subtitle">3-time World Snooker Champion · The Golden Left Hand · Class of '92 · Former World No.1</p>
-	            <p class="body">Built Mark Williams' China-facing athlete IP from zero through original content series, local storytelling, event programming, brand partnerships, and commercial value.</p>
-	            <div class="hero-stats">
-	              <div><strong>0 -> 500K+</strong><span>China-facing followers</span></div>
-	              <div><strong>0 -> 350K+</strong><span>Douyin followers</span></div>
-	              <div><strong>2.8B+</strong><span>topic volume</span></div>
-	              <div><strong>$0 -> $1M+</strong><span>brand value</span></div>
-	            </div>
+		            <img class="mark-hero-image mark-trophy-image" src="assets/mark_trophy_wide.jpg" alt="Mark Williams with Triple Crown trophy">
+		            <h3>MARK WILLIAMS</h3>
+		            <p class="subtitle">3-time World Snooker Champion · The Golden Left Hand · Class of '92 · Former World No.1 · Active snooker legend</p>
+		            <p class="body">I built Mark Williams' China-facing athlete IP from zero, translating a world-class snooker legacy into localized content, fan growth, event programming, and commercial value.</p>
+		            <div class="hero-stats">
+		              <div><strong><span class="neutral-stat">0 -> </span><span class="hot">500K+</span></strong><span>China-facing followers</span></div>
+		              <div><strong class="neutral-stat">0 -> 350K+</strong><span>Douyin followers</span></div>
+		              <div><strong class="hot">2.8B+</strong><span>topic volume</span></div>
+		              <div><strong><span class="neutral-stat">$0 -> </span><span class="hot">$1M+</span></strong><span>brand value</span></div>
+		            </div>
 	          </div>
 
 	          <section class="story-block">
 	            <div class="story-heading">
 	              <small>Mark Williams / The Market-Entry Challenge</small>
 	              <h3>The Market-Entry Challenge</h3>
-	              <p>Mark Williams had elite global snooker credibility, but no China-facing digital system before 2023. The task was to make a world champion feel current, local, and emotionally accessible without losing his authority.</p>
+		              <p>Mark Williams had elite global snooker credibility, but no China-facing digital system before 2023. The content was not simply to introduce him to Chinese fans, but to make him feel current, local, and emotionally accessible without losing his world-champion authority.</p>
 	            </div>
 	          </section>
 
@@ -4783,39 +5446,31 @@
 	            <div class="story-heading">
 	              <small>Mark Williams / Original Content System</small>
 	              <h3>Original Content System</h3>
-	              <p>The Mark case was not only a market-entry story. It was built through repeatable original formats that localized him as a person, a competitor, and a guide into Chinese billiards culture.</p>
+	              <p>The Mark case was built through repeatable original formats that localized him as a person, a competitor, and a guide into Chinese billiards culture.</p>
 	            </div>
 	            <div class="series-grid mark-original-grid">
 	              <article class="series-card">
 	                <img src="assets/img_023.jpg" alt="Finding Folk Masters proof">
 	                <div>
-	                  <strong>Finding Folk Masters / 寻找民间高手</strong>
-	                  <span>6 episodes · 21.89M+ views</span>
-	                  <p>Mark discovers grassroots Chinese billiards talent, turning a foreign champion into a curious local observer.</p>
+	                  <strong>Finding China Masters</strong>
+		                  <span>6 episodes · <strong>21M+</strong> views</span>
+	                  <p><b>Finding Folk Masters.</b> A grassroots challenge format that brought Mark into China's local billiards culture.</p>
 	                </div>
 	              </article>
 	              <article class="series-card">
 	                <img src="assets/img_024.jpg" alt="Mark in China proof">
 	                <div>
 	                  <strong>Mark in China / 马桂莲在中国</strong>
-	                  <span>60 episodes · 72.16M+ views</span>
-	                  <p>A lifestyle-localization series built around Mark's everyday encounters, humor, travel, food, and cultural discovery.</p>
+		                  <span>60 episodes · <strong>72M+</strong> views</span>
+	                  <p>A lifestyle and culture series built around food, travel, family moments, Chinese experiences, and everyday humor.</p>
 	                </div>
 	              </article>
 	              <article class="series-card">
 	                <img src="assets/img_025.jpg" alt="Tournament Dispatch proof">
 	                <div>
 	                  <strong>Tournament Dispatch / 赛场速递</strong>
-	                  <span>87 episodes · 44.55M+ views</span>
-	                  <p>Competition-day vlogs and quick dispatches that kept Mark present during tournaments instead of only appearing in polished campaign moments.</p>
-	                </div>
-	              </article>
-	              <article class="series-card">
-	                <img src="assets/img_026.jpg" alt="Mark Williams competition proof">
-	                <div>
-	                  <strong>Zheng Yubo Rivalry Topic</strong>
-	                  <span>26M+ topic plays</span>
-	                  <p>A flagship cross-format rivalry narrative connecting Mark with Zheng Yubo and China's professional billiards conversation.</p>
+		                  <span>87 episodes · <strong>44M+</strong> views</span>
+	                  <p>Timely short-form updates around matches, practice, reactions, and Mark's active professional journey.</p>
 	                </div>
 	              </article>
 	            </div>
@@ -4825,13 +5480,74 @@
 	            <div class="story-heading">
 	              <small>Mark Williams / Platform, Events & Commercial Expansion</small>
 	              <h3>Platform, Events & Commercial Expansion</h3>
-	              <p>The China-facing platform expanded into content launches, tournament visibility, official event activations, cue-brand partnerships, and long-term commercial value.</p>
+	              <p>Beyond social growth, the Mark Williams IP expanded into China-facing platform launches, tournament visibility, official event activations, cue-brand partnerships, and long-term commercial value.</p>
+	            </div>
+	            <div class="commercial-grid mark-pillar-grid">
+	              <article class="commercial-tile">
+	                <strong>Platform Expansion</strong>
+	                <p>Kuaishou and POIZON launches extended Mark's China-facing presence beyond Douyin and Weibo.</p>
+	                <span>Kuaishou · POIZON · Douyin · Weibo</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Tournament Visibility</strong>
+	                <p>Joy Chinese Pool Masters participation connected Mark to China's professional billiards ecosystem.</p>
+	                <span>Chinese Pool Masters · tournament-side content</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Official Event Activation</strong>
+	                <p>The WST x Juss Sports Shanghai Masters event-side livestream brought Mark into a multi-platform official sports activation alongside Pan Xiaoting.</p>
+	                <span>Douyin · Huya · WeChat Channels</span>
+	              </article>
+	              <article class="commercial-tile">
+	                <strong>Commercial Partnership</strong>
+	                <p>Zhangyu Cue connected Mark's world-champion credibility to cue-brand sponsorship, athlete roster building, and sales-facing platform assets.</p>
+	                <span>Zhangyu Cue · ambassador launch · product value</span>
+	              </article>
 	            </div>
 	            <div class="mark-expansion">
 	              <img src="assets/img_027.jpg" alt="Mark Williams Kuaishou proof">
 	              <img src="assets/img_028.jpg" alt="Mark Williams Zhangyu proof">
 	              <img class="wide" src="assets/img_029.jpg" alt="Mark Williams campaign banner">
 	              <img class="wide" src="assets/img_030.jpg" alt="Mark Williams event proof">
+	            </div>
+	            <p class="mark-proof-caption">The proof here is deliberately mixed: owned account surfaces, product launch assets, cue-brand campaign visuals, and offline event proof together show how the IP moved from content into commercial infrastructure.</p>
+	          </section>
+
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Mark Williams / Zhangyu Cue Commercial Partnership</small>
+	              <h3>Zhangyu Cue Commercial Value</h3>
+	              <p>A cue-brand partnership built around world-champion credibility, product legitimacy, event visibility, and athlete-roster value.</p>
+	            </div>
+	            <article class="commercial-feature">
+	              <div>
+	                <small>Brand Partnership / Ambassador & Product System</small>
+	                <strong>From Champion IP to Cue-Brand Value</strong>
+	                <p>The Zhangyu work connected Mark's authority to a concrete commercial product system: ambassador launch, product-facing content, event-side exposure, roster-building language, and sales-channel credibility. This is the commercial conversion layer of the Mark case, not just another content proof.</p>
+	              </div>
+	              <div class="zhangyu-proof-grid">
+	                <img src="assets/zhangyu_signing_ceremony.jpg" alt="Zhangyu Cue signing ceremony with Mark Williams">
+	                <img src="assets/zhangyu_vs_poster.jpg" alt="Zhangyu Cue Mark Williams challenge poster">
+	                <img src="assets/zhangyu_product_poster.jpg" alt="Zhangyu Cue Mark Williams product poster">
+	              </div>
+	            </article>
+	          </section>
+
+	          <section class="story-block">
+	            <div class="story-heading">
+	              <small>Pan vs Mark / Same Playbook, Different Market-Entry Problem</small>
+	              <h3>Same Playbook, Different Market-Entry Problem</h3>
+	              <p>Pan Xiaoting and Mark Williams prove two sides of the same operating system: one scales a Chinese legend with existing public recognition; the other builds an international champion's China-market audience from zero.</p>
+	            </div>
+	            <div class="mark-difference">
+	              <article>
+	                <strong>Pan Xiaoting</strong>
+	                <p>A Chinese champion with mainstream familiarity. The work expanded her into platform-native original content, creator collaborations, live programming, brand partnerships, and commerce conversion.</p>
+	              </article>
+	              <article>
+	                <strong>Mark Williams</strong>
+	                <p>A global champion entering China without a local digital base. The work built audience, narrative, event visibility, and commercial value through localized content instead of one-way translation.</p>
+	              </article>
 	            </div>
 	          </section>
 	        </article>
@@ -4949,16 +5665,24 @@
           <div class="web-copy">
             <h3>GAP</h3>
             <div class="project-meta"><span>Role: Producer / Director</span><span>Client: GAP China</span><span>2021-2023</span></div>
-            <p>Three-year production partnership covering flat graphics, activity shoots, e-commerce assets, brand content, and event marketing for a high-volume fashion-retail content pipeline.</p>
-            <div class="metric-row"><span>2,000+ videos</span><span>50+ PR events / year</span><span>Flat graphics + shoots</span></div>
-          </div>
-          <div class="web-media-grid">
-            <img class="poster" src="assets/img_044.jpg" alt="GAP flat graphic proof A">
-            <img class="poster" src="assets/img_045.jpg" alt="GAP flat graphic proof B">
-            <img class="poster" src="assets/img_046.jpg" alt="GAP flat graphic proof C">
-            <img class="poster" src="assets/img_047.jpg" alt="GAP flat graphic proof D">
-          </div>
-        </article>
+	            <p>Three-year production partnership covering flat graphics, activity shoots, e-commerce assets, brand content, and event marketing for a high-volume fashion-retail content pipeline.</p>
+	            <div class="metric-row"><span>2,000+ videos</span><span>50+ PR events / year</span><span>Flat graphics + shoots</span></div>
+	            <div class="project-links">
+	              <a href="assets/img_044.jpg" target="_blank" rel="noopener">GAP video proof 01</a>
+	              <a href="assets/img_045.jpg" target="_blank" rel="noopener">GAP video proof 02</a>
+	              <a href="assets/img_046.jpg" target="_blank" rel="noopener">GAP video proof 03</a>
+	              <a href="assets/img_047.jpg" target="_blank" rel="noopener">A&F / HCO / GAP sheet</a>
+	            </div>
+	          </div>
+	          <div class="web-media-grid">
+	            <img class="poster" src="assets/img_048.jpg" alt="GAP flat graphic proof A">
+	            <img class="poster" src="assets/img_049.jpg" alt="GAP flat graphic proof B">
+	            <img class="poster" src="assets/img_050.jpg" alt="GAP flat graphic proof C">
+	            <img class="poster" src="assets/img_051.jpg" alt="GAP flat graphic proof D">
+	            <img class="landscape contain" src="assets/img_044.jpg" alt="GAP store-visit video proof thumbnail">
+	            <img class="landscape contain" src="assets/img_045.jpg" alt="GAP final video proof thumbnail">
+	          </div>
+	        </article>
         <article class="web-case">
           <div class="web-copy">
             <h3>POP MART NYC</h3>
@@ -4967,10 +5691,10 @@
             <div class="metric-row"><span>NYC activation</span><span>Street-fashion lens</span><span>Pop-up proof</span></div>
           </div>
           <div class="web-media-grid">
-            <img class="landscape" src="assets/img_048.jpg" alt="POP MART NYC proof A">
-            <img class="landscape" src="assets/img_049.jpg" alt="POP MART NYC proof B">
-            <img class="landscape" src="assets/img_050.jpg" alt="POP MART NYC proof C">
-            <img class="landscape" src="assets/img_051.jpg" alt="POP MART NYC proof D">
+            <img class="landscape" src="assets/img_052.jpg" alt="POP MART NYC proof A">
+            <img class="landscape" src="assets/img_053.jpg" alt="POP MART NYC proof B">
+            <img class="landscape" src="assets/img_054.jpg" alt="POP MART NYC proof C">
+            <img class="landscape" src="assets/img_055.jpg" alt="POP MART NYC proof D">
           </div>
         </article>
         <article class="web-case" id="china-france-production">
@@ -4984,10 +5708,10 @@
             </div>
           </div>
           <div class="long-proof-board">
-            <img src="assets/img_052.jpg" alt="China-France long still strip A">
-            <img src="assets/img_053.jpg" alt="China-France long still strip B">
-            <img class="team-proof" src="assets/img_054.jpg" alt="China-France co-production crew proof">
-            <img class="team-proof" src="assets/img_055.jpg" alt="China-France Shanghai crew proof">
+            <img src="assets/img_056.jpg" alt="China-France long still strip A">
+            <img src="assets/img_057.jpg" alt="China-France long still strip B">
+            <img class="team-proof" src="assets/img_058.jpg" alt="China-France co-production crew proof">
+            <img class="team-proof" src="assets/img_059.jpg" alt="China-France Shanghai crew proof">
           </div>
         </article>
         <article class="web-case" id="i-love-you-china-mv">
@@ -5001,9 +5725,9 @@
             </div>
           </div>
           <div class="media-stack">
-            <img class="hero" src="assets/img_056.jpg" alt="I Love You China MV still">
-            <img class="small" src="assets/img_057.jpg" alt="I Love You China MV green screen proof">
-            <img class="small" src="assets/img_058.jpg" alt="I Love You China MV green-screen group proof">
+            <img class="hero" src="assets/img_060.jpg" alt="I Love You China MV still">
+            <img class="small" src="assets/img_061.jpg" alt="I Love You China MV green screen proof">
+            <img class="small" src="assets/img_062.jpg" alt="I Love You China MV green-screen group proof">
           </div>
         </article>
       </div>
@@ -5032,10 +5756,11 @@
 	              <div><strong>40%+</strong><span>avg. completion rate</span></div>
 	            </div>
 	          </div>
-	          <div class="pdf-shot">
-	            <img src="assets/img_059.jpg" alt="Oriental Shopping case proof from PDF">
-	            <a class="file-link" href="assets/doc_001.pdf" target="_blank" rel="noopener">Open source PDF</a>
-	          </div>
+		          <div class="pdf-shot oriental-proof">
+		            <img src="assets/img_063.jpg" alt="Oriental Shopping English case proof page 1">
+		            <img src="assets/img_064.jpg" alt="Oriental Shopping English case proof page 2">
+		            <a class="file-link" href="assets/doc_001.pdf" target="_blank" rel="noopener">Open original source PDF</a>
+		          </div>
         </article>
         <article class="web-case">
 	          <div class="web-copy">
@@ -5057,23 +5782,23 @@
 	              <span>Official Douyin surface / short-video proof / brand identity</span>
 	            </div>
 	            <figure class="account-shot">
-	              <img src="assets/img_060.jpg" alt="Porsche Douyin channel detail proof">
+	              <img src="assets/img_065.jpg" alt="Porsche Douyin channel detail proof">
 	              <figcaption>Channel Detail</figcaption>
 	            </figure>
 	            <figure class="phone">
-	              <img src="assets/img_061.jpg" alt="Porsche channel proof B">
+	              <img src="assets/img_066.jpg" alt="Porsche channel proof B">
 	              <figcaption>Video Proof</figcaption>
 	            </figure>
 	            <figure class="phone">
-	              <img src="assets/img_062.jpg" alt="Porsche channel proof C">
+	              <img src="assets/img_067.jpg" alt="Porsche channel proof C">
 	              <figcaption>Series Proof</figcaption>
 	            </figure>
 	            <figure class="phone">
-	              <img src="assets/img_063.jpg" alt="Porsche channel proof D">
+	              <img src="assets/img_068.jpg" alt="Porsche channel proof D">
 	              <figcaption>Content Surface</figcaption>
 	            </figure>
 	            <figure class="brand-shot contain">
-	              <img src="assets/img_064.jpg" alt="Porsche brand proof">
+	              <img src="assets/img_069.jpg" alt="Porsche brand proof">
 	              <figcaption>Brand Identity</figcaption>
 	            </figure>
 	            <div class="proof-brief">
@@ -5084,17 +5809,23 @@
         </article>
         <article class="web-case">
           <div class="web-copy">
-            <h3>Ele.me</h3>
-            <div class="project-meta"><span>Role: Platform Distribution Lead</span><span>Client: Ele.me / Alibaba</span><span>Platform content</span></div>
-            <p>Platform-facing brand content system for Ele.me, covering official-channel publishing, campaign releases, social proof, and distribution-ready surfaces.</p>
-            <div class="metric-row"><span>Owned media</span><span>Channel proof</span><span>Campaign distribution</span></div>
-          </div>
+	            <h3>Ele.me / Entertainment Distribution</h3>
+	            <div class="project-meta"><span>Role: Platform Distribution Lead</span><span>Client: Ele.me / Alibaba</span><span>Platform entertainment content</span></div>
+	            <p>Platform-facing entertainment distribution system for Ele.me, covering official-channel surfaces, campaign publishing, music-list activation, short-form proof, and brand-safe content distribution.</p>
+	            <div class="metric-row"><span>700K new followers / 90 days</span><span>official channel proof</span><span>campaign publishing</span><span>music-list activation</span></div>
+	            <div class="operations-data">
+	              <div><strong class="hot">700K</strong><span>new followers in 90 days</span></div>
+	              <div><strong>1.04M</strong><span>flagship-account follower proof</span></div>
+	              <div><strong>524K</strong><span>YouMusic Chart follower proof</span></div>
+	              <div><strong>345+</strong><span>published works shown</span></div>
+	            </div>
+	          </div>
           <div class="web-media-grid proof-thumb-grid">
-            <img class="phone lowres" src="assets/img_065.jpg" alt="Eleme channel proof A">
-            <img class="phone lowres" src="assets/img_066.jpg" alt="Eleme channel proof B">
-            <img class="phone lowres" src="assets/img_067.jpg" alt="Eleme channel proof C">
-            <img class="wide" src="assets/img_068.jpg" alt="Eleme channel proof D">
-            <img class="square contain" src="assets/img_069.jpg" alt="Eleme channel proof E">
+            <img class="phone lowres" src="assets/img_070.jpg" alt="Eleme channel proof A">
+            <img class="phone lowres" src="assets/img_071.jpg" alt="Eleme channel proof B">
+            <img class="phone lowres" src="assets/img_072.jpg" alt="Eleme channel proof C">
+            <img class="wide" src="assets/img_073.jpg" alt="Eleme channel proof D">
+            <img class="square contain" src="assets/img_074.jpg" alt="Eleme channel proof E">
           </div>
         </article>
       </div>
